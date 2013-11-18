@@ -52,7 +52,11 @@ public class Deck {
 	public final int DECK_SIZE = 82;
 	
 	public Card drawCard(){
-		return cards.remove(0);
+		if(!cards.isEmpty()){
+			return cards.remove(0);
+		}else{
+			return null;
+		}
 	}
 	
 	public void shuffle(){

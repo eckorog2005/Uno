@@ -31,5 +31,15 @@ public class Card {
 		this.cardColor = cardColor;
 	}
 	
-	
+	public boolean isPlayable(Card otherCard){
+		if(this.cardValue.equals(CardValueEnum.WILD)){
+			return true;
+		}else if(this.cardValue.equals(otherCard.cardValue)){
+			return true;
+		}else if(this.cardColor.equals(otherCard.cardColor)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
