@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Card;
+import cmsc519.team8.uno.data.Deck;
 
 public class UnoGamePanel extends JPanel {
 
@@ -15,24 +16,25 @@ public class UnoGamePanel extends JPanel {
 	
 	private DisplayableHand theItem;
     private int x, y;
+
+    private final DisplayableDeck displayableDeck = 
+    		new DisplayableDeck(new Deck());
+
+    private final DisplayableDiscardPile displayableDiscardPile = 
+    		new DisplayableDiscardPile();
  
     public void paint(Graphics g) {
-        if (theItem != null)
-            theItem.displayHand(g, x, y);
+        displayableDeck.displayDeck(g, 200, 139);
+        displayableDiscardPile.displayDiscardPile(g, 300, 139);
     }
      
-    public void setItem(DisplayableHand item, int x, int y) {
-        theItem = item;
-        this.x = x;
-        this.y = x;
-    }
 	/**
 	 * Create the panel. (image test right now)
 	 */
 	public UnoGamePanel() {
 		DisplayableHand hand = new DisplayableHand();
 		hand.addCard(new DisplayableCard(new Card()));
-		setItem(hand,100,100);
+		//setItem(hand,100,100);
 	}
 
 }
