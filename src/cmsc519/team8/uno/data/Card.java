@@ -1,5 +1,11 @@
 package cmsc519.team8.uno.data;
 
+/**
+ * Represents a single UNO card
+ * 
+ * @author Team8
+ *
+ */
 public class Card {
 
 	public Card(){
@@ -31,6 +37,11 @@ public class Card {
 		this.cardColor = cardColor;
 	}
 	
+	/**
+	 * checks to see if this called can be played on top of other card
+	 * @param otherCard - discarded card
+	 * @return
+	 */
 	public boolean isPlayable(Card otherCard){
 		if(this.cardValue.equals(CardValueEnum.WILD)){
 			return true;

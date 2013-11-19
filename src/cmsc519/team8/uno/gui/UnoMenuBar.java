@@ -9,7 +9,8 @@ public class UnoMenuBar extends JMenuBar {
 	/**
 	 * UID for JToolBar
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -665122809628935394L;
+
 
 	/**
 	 * Create the panel.
