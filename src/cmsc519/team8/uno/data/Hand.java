@@ -48,4 +48,10 @@ public class Hand {
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
+	
+	public void printHand(){
+		for(int i = 0; i<cards.size(); i++){
+			System.out.println(cards.get(i).toString());
+		}
+	}
 }

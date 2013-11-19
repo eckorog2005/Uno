@@ -1,6 +1,7 @@
 package cmsc519.team8.uno.data;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This deck represents an Uno deck, not a generic one
@@ -65,12 +66,18 @@ public class Deck {
 		}
 		
 		Card temp;
-		int rand = 0;
+		Random rand = new Random();
 		for (int i = cards.size()-1; i >= 1; i--) {
 			temp = cards.get(i);
-			rand = 0;
-			cards.set(i,cards.get(rand));
-			cards.set(rand, temp);
+			int randInt = Math.abs(rand.nextInt()) % i;
+			cards.set(i,cards.get(randInt));
+			cards.set(randInt, temp);
+		}
+	}
+	
+	public void printDeck(){
+		for(int i = 0; i<cards.size(); i++){
+			System.out.println(cards.get(i).toString());
 		}
 	}
 }
