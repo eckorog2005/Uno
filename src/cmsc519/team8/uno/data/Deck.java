@@ -1,4 +1,4 @@
-package cmsc519.team8.uno;
+package cmsc519.team8.uno.data;
 
 import java.util.ArrayList;
 
