@@ -1,0 +1,36 @@
+UNO Help Manual
+
+** HOW TO PLAY **
+
+i. The objective of "Uno" is to reduce your hand to zero before your opponents can do so.
+
+1. Every player picks a card. The person who picks the highest number deals. Action Cards 
+count as zero for this part of the game. 
+
+2. Once the cards are shuffled each player is dealt 7 cards. 
+The remainder of the deck is placed face down to form a DRAW pile. 
+
+3. The top card of the DRAW pile is turned over to begin a DISCARD pile. 
+If an Action Card is the first one turned up from the DRAW pile, 
+it needs to be placed back to DRAW pile (any place other than the top). 
+Repeat 3 until the top card of the DRAW pile is not an action card. 
+
+4. The person to the left of the dealer starts play. 
+He/she has to match the card on the DISCARD pile, either by number, color or symbol. 
+For example, if the card is a red 7, the player must put down a red card or any color 7. 
+Alternatively, the player can put down a Wild card.
+
+**THE WILD CARD **
+
+The "Wild Card" can be played upon any other card, at which point the player calls a color,
+the color of the wild card becomes the declard color, and the following card's color must
+match it to be legally played. Note that no other card can match the wild card's number since
+it does not have one, so the only cards that can be played immediately after a Wild Card is a
+card of the declared color.
+
+** ENDING THE GAME **
+Before the draw pile is empty, when a player has only one card left, he/she must yell “UNO” 
+(meaning “one”). Once a player has no card left, the game ends. 
+If the draw pile is empty, the person who holds the least number of cards wins.
+
+END
