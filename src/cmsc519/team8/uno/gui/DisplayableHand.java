@@ -1,6 +1,10 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import cmsc519.team8.uno.data.Card;
 import cmsc519.team8.uno.data.Hand;
@@ -10,9 +14,22 @@ public class DisplayableHand {
 	private final int HAND_LENGTH = 500;
 	private final int CARD_SELECT_HEIGHT = 50; 
 	private final int CARD_WIDTH = 100;
+	private boolean isUser = false;
+	private BufferedImage image = null;
 
-	DisplayableHand(){
+	DisplayableHand(boolean isUser){
 		hand = new Hand();
+		this.isUser = isUser;
+		if(!isUser){
+			try {
+				image = 
+						ImageIO.read(getClass().getResource
+								("/images/unoCards/UNO BACK.JPG"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private Hand hand;
@@ -64,13 +81,21 @@ public class DisplayableHand {
 		}
 		
 		for(Card card : hand.getCards()){
-			DisplayableCard dCard = new DisplayableCard(card);
-			if(switchX){
-				dCard.displayCard(g, topX + x, topY + y, 90);
+			if(isUser){
+				DisplayableCard dCard = new DisplayableCard(card);
+				if(switchX){
+					dCard.displayCard(g, topX + x, topY + y, 90);
+				}else{
+					dCard.displayCard(g, topX + x, topY + y, 0);
+				}
 			}else{
-				dCard.displayCard(g, topX + x, topY + y, 0);
+				if(switchX){
+					g.drawImage(ImageUtils.rotate(image,Math.toRadians(90)),
+							topX + x, topY + y, 140, 100, null);
+				}else{
+					g.drawImage(image, topX + x, topY + y, 100, 140, null);
+				}
 			}
-			
 			if(inverted){
 				if(switchX){
 					y -= spacing;

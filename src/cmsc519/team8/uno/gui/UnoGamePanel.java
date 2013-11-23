@@ -23,10 +23,10 @@ public class UnoGamePanel extends JPanel {
     private final DisplayableDiscardPile displayableDiscardPile = 
     		new DisplayableDiscardPile();
     
-    private final DisplayableHand userHand = new DisplayableHand();
-    private final DisplayableHand computer1 = new DisplayableHand();
-    private final DisplayableHand computer2 = new DisplayableHand();
-    private final DisplayableHand computer3 = new DisplayableHand();
+    private final DisplayableHand userHand = new DisplayableHand(true);
+    private final DisplayableHand computer1 = new DisplayableHand(false);
+    private final DisplayableHand computer2 = new DisplayableHand(false);
+    private final DisplayableHand computer3 = new DisplayableHand(false);
  
     public void paint(Graphics g) {
         displayableDeck.displayDeck(g, 200, 139);
