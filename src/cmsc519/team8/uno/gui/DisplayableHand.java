@@ -53,7 +53,7 @@ public class DisplayableHand {
 							(CARD_WIDTH/2));
 				}
 			}
-		}while(x < 0 && spacing > 0);
+		}while((x < 0 || y < 0) && spacing > 0);
 		
 		if(inverted){
 			if(switchX){
@@ -65,7 +65,11 @@ public class DisplayableHand {
 		
 		for(Card card : hand.getCards()){
 			DisplayableCard dCard = new DisplayableCard(card);
-			dCard.displayCard(g, topX + x, topY + y, 0);
+			if(switchX){
+				dCard.displayCard(g, topX + x, topY + y, 90);
+			}else{
+				dCard.displayCard(g, topX + x, topY + y, 0);
+			}
 			
 			if(inverted){
 				if(switchX){

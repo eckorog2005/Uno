@@ -41,7 +41,7 @@ public class UnoGamePanel extends JPanel {
 	 * Create the panel. (image test right now)
 	 */
 	public UnoGamePanel() {
-		for(int i = 0; i<20;i++){
+		for(int i = 0; i<7;i++){
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());
 			computer2.addCard(displayableDeck.drawCard());
