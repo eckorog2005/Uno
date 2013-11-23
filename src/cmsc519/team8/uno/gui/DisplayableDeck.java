@@ -23,11 +23,15 @@ public class DisplayableDeck {
 		this.deck = deck;
 	}
 	
+	public DisplayableCard drawCard(){
+		return new DisplayableCard(deck.drawCard());
+	}
+	
 	public void displayDeck(Graphics g, int x, int y){
-        String filename = "/images/unoCards/test";
-		Image image = 
-        		new ImageIcon(getClass().getResource(filename)).getImage();
+        //String filename = "/images/unoCards/test";
+		//Image image = 
+        //		new ImageIcon(getClass().getResource(filename)).getImage();
         
-        g.drawImage(image, x, y, null);
+		//g.drawImage(image, x, y, null);
 	}
 }
