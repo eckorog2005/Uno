@@ -30,6 +30,21 @@ public class UnoMenuBar extends JMenuBar {
 		
 		//add game option
 		JMenu menu = new JMenu("Game");
+		
+		
+		
+		
+		JMenuItem close = new JMenuItem("Exit");
+		
+	    close.addActionListener(
+	    	      new ActionListener() {
+	    	        public void actionPerformed(ActionEvent e) {
+	    	          System.exit(0);
+	    	        }
+	    	      }
+	    	    );
+		
+		
 		JMenuItem help = new JMenuItem("Help");
 		help.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent actionEvent) {
@@ -62,6 +77,10 @@ public class UnoMenuBar extends JMenuBar {
 		});
 		add(menu);
 		add(help);
+		add(close);
 	}
+	
+	
+	
 
 }
