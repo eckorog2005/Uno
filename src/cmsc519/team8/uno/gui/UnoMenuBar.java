@@ -1,12 +1,16 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -28,8 +32,27 @@ public class UnoMenuBar extends JMenuBar {
 	public UnoMenuBar() {
 		super();
 		
-		//add game option
+		//add game option menu
 		JMenu menu = new JMenu("Game");
+		
+		//quit button
+		final JMenuItem quit = new JMenuItem("Quit");
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent actionEvent) {
+				for (Frame frame : Frame.getFrames())
+				{
+					if (frame.isActive())
+					{
+						WindowEvent windowClosing = new WindowEvent(
+								frame, WindowEvent.WINDOW_CLOSING);
+						frame.dispatchEvent(windowClosing);
+					}
+				}
+			}
+		});
+		menu.add(quit);
+		
+		//help option
 		JMenuItem help = new JMenuItem("Help");
 		help.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent actionEvent) {
@@ -60,8 +83,10 @@ public class UnoMenuBar extends JMenuBar {
 	        	}
 	        }
 		});
+		
 		add(menu);
 		add(help);
+		
 	}
 
 }
