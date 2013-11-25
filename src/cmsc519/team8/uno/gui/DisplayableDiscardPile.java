@@ -37,7 +37,7 @@ public class DisplayableDiscardPile {
 		if(discard != null){
 			String filename = "/images/unoCards/test";
 			Image image = 
-					new ImageIcon(getClass().getResource(filename)).getImage();
+					new ImageIcon(getClass().getResource(filename)).getImage(discard.getCardImg());
         
 			g.drawImage(image, x, y, null);
 		}else{
