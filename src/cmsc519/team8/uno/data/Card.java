@@ -58,5 +58,9 @@ public class Card {
 	public String toString(){
 		return this.cardValue + " " + this.cardColor;
 	}
+	
+		public String getCardImg(){
+		rturn "UNO" + this.cardColor + " " +this.cardValue;
+	}
 }
 
