@@ -27,8 +27,8 @@ public class UnoGamePanel extends JPanel {
  
     @Override
     public void paintComponent(Graphics g) {
-        displayableDeck.displayDeck(g, 200, 139);
-        displayableDiscardPile.displayDiscardPile(g, 300, 139);
+        displayableDeck.displayDeck(g, 260, 200);
+        displayableDiscardPile.displayDiscardPile(g, 430, 200);
         userHand.displayHand(g, 150, 400, false, false);
         computer1.displayHand(g, 0, 25, false, true);
         computer2.displayHand(g, 150, 0, true, false);
@@ -65,12 +65,14 @@ public class UnoGamePanel extends JPanel {
 		lblCpu3.setVisible(true);
 		add(lblCpu3);
 		
+		//testing purposes
 		for(int i = 0; i<7;i++){
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());
 			computer2.addCard(displayableDeck.drawCard());
 			computer3.addCard(displayableDeck.drawCard());
 		}
+
 	}
 
 }

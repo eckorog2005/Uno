@@ -28,10 +28,10 @@ public class DisplayableDeck {
 	}
 	
 	public void displayDeck(Graphics g, int x, int y){
-        String filename = "/images/unoCards/test";
+        String filename = "/images/unoCards/UNO BACK.JPG";
 		Image image = 
-        		new ImageIcon(getClass().getResource(filename)).getImage("UNO BACK");
+        		new ImageIcon(getClass().getResource(filename)).getImage();
         
-		g.drawImage(image, x, y, null);
+		g.drawImage(image, x, y, 100, 140, null);
 	}
 }

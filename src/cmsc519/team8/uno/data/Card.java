@@ -60,7 +60,7 @@ public class Card {
 	}
 	
 		public String getCardImg(){
-		rturn "UNO" + this.cardColor + " " +this.cardValue;
+		return "UNO" + this.cardColor + " " +this.cardValue;
 	}
 }
 

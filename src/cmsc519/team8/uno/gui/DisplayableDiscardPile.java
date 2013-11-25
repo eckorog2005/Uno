@@ -9,22 +9,25 @@ import cmsc519.team8.uno.data.Card;
 
 public class DisplayableDiscardPile {
 
-	DisplayableDiscardPile(Card discard){
+	DisplayableDiscardPile(DisplayableCard discard){
 		this.setDiscardCard(discard);
 	}
 
 	public DisplayableDiscardPile() {
 		discard = null;
+		String filename = "/images/unoCards/BLANK PILE.gif";
+		noCards = new ImageIcon(getClass().getResource(filename)).getImage();
 	}
 
-	private Card discard;
+	private DisplayableCard discard;
+	private Image noCards;
 
 
-	public void setDiscardCard(Card discard) {
+	public void setDiscardCard(DisplayableCard discard) {
 		this.discard = discard;
 	}
 	
-	public Card getDiscardCard() {
+	public DisplayableCard getDiscardCard() {
 		return discard;
 	}
 	
@@ -35,13 +38,9 @@ public class DisplayableDiscardPile {
 	public void displayDiscardPile(Graphics g, int x, int y){
 
 		if(discard != null){
-			String filename = "/images/unoCards/test";
-			Image image = 
-					new ImageIcon(getClass().getResource(filename)).getImage(discard.getCardImg());
-        
-			g.drawImage(image, x, y, null);
-		}else{
-			
+			discard.displayCard(g, x, y, 0);
+		}else{        
+			g.drawImage(noCards, x, y, 100, 140, null);
 		}
 	}
 }
