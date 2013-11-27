@@ -130,10 +130,20 @@ public class DisplayableHand extends JPanel {
 				}
 			}else{
 				if(switchX){
-					g.drawImage(ImageUtils.rotate(image,Math.toRadians(90)),
-							topX + x, topY + y, 140, 100, null);
+					if (inverted){
+						g.drawImage(ImageUtils.rotate(image,Math.toRadians(-90)),
+								topX + x, topY + y, 140, 100, null);
+					}else{
+						g.drawImage(ImageUtils.rotate(image,Math.toRadians(90)),
+								topX + x, topY + y, 140, 100, null);
+					}
 				}else{
-					g.drawImage(image, topX + x, topY + y, 100, 140, null);
+					if (inverted){
+						g.drawImage(ImageUtils.rotate(image,Math.toRadians(180)),
+								topX + x, topY + y, 100, 140, null);
+					}else{
+						g.drawImage(image, topX + x, topY + y, 100, 140, null);
+					}
 				}
 			}
 			if(inverted){
