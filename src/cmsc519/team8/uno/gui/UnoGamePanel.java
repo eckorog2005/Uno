@@ -1,10 +1,12 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Deck;
+
 import javax.swing.JLabel;
 
 public class UnoGamePanel extends JPanel {
