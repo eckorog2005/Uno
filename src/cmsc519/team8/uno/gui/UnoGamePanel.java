@@ -1,10 +1,13 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Deck;
+
 import javax.swing.JLabel;
 
 public class UnoGamePanel extends JPanel {
@@ -20,19 +23,19 @@ public class UnoGamePanel extends JPanel {
     private final DisplayableDiscardPile displayableDiscardPile = 
     		new DisplayableDiscardPile();
     
-    private final DisplayableHand userHand = new DisplayableHand(true);
-    private final DisplayableHand computer1 = new DisplayableHand(false);
-    private final DisplayableHand computer2 = new DisplayableHand(false);
-    private final DisplayableHand computer3 = new DisplayableHand(false);
+    private final DisplayableHand userHand = new DisplayableHand(true, 150, 380, false, false);
+    private final DisplayableHand computer1 = new DisplayableHand(false, 0, 25, false, true);
+    private final DisplayableHand computer2 = new DisplayableHand(false, 150, 0, true, false);
+    private final DisplayableHand computer3 = new DisplayableHand(false, 650, 25, true, true);
  
     @Override
     public void paintComponent(Graphics g) {
-        displayableDeck.displayDeck(g, 260, 200);
+    	super.paintComponent(g);
+    	displayableDeck.displayDeck(g, 260, 200);
         displayableDiscardPile.displayDiscardPile(g, 430, 200);
-        userHand.displayHand(g, 150, 400, false, false);
-        computer1.displayHand(g, 0, 25, false, true);
-        computer2.displayHand(g, 150, 0, true, false);
-        computer3.displayHand(g, 650, 25, true, true);
+        computer1.paintComponent(g);
+        computer2.paintComponent(g);
+        computer3.paintComponent(g);
     }
      
 	/**
@@ -43,7 +46,7 @@ public class UnoGamePanel extends JPanel {
 		
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(30, 20);
-		lblUser.setLocation(388, 380);
+		lblUser.setLocation(388, 360);
 		lblUser.setVisible(true);
 		add(lblUser);
 		
@@ -65,6 +68,14 @@ public class UnoGamePanel extends JPanel {
 		lblCpu3.setVisible(true);
 		add(lblCpu3);
 		
+		userHand.setSize(500, 160);
+		userHand.setLocation(150, 380);
+		add(userHand);
+		add(computer1);
+		add(computer2);
+		add(computer3);
+		addMouseListener(new MouseController());
+		
 		//testing purposes
 		for(int i = 0; i<7;i++){
 			userHand.addCard(displayableDeck.drawCard());
@@ -72,7 +83,17 @@ public class UnoGamePanel extends JPanel {
 			computer2.addCard(displayableDeck.drawCard());
 			computer3.addCard(displayableDeck.drawCard());
 		}
-
 	}
+	
+	private class MouseController extends MouseAdapter
+    {
+        public void mouseClicked(MouseEvent me)
+        {           
+            int xHitOnPanel = me.getX();
+            int yHitOnPanel = me.getY();
 
+//            if (boundsForMouse.contains(xHitOnPanel, yHitOnPanel))
+//                imageIndex = setImage(imageIndex);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -35,15 +36,28 @@ public class DisplayableCard{
 
 	private Card card;
 	private BufferedImage image;
+	private int x;
+	private int y;
+	
+	public BufferedImage getImage(){
+		return image;
+	}
 
 	public Card getCard() {
 		return card;
+	}
+	
+	public Rectangle getUserCardRectangle(){
+		return new Rectangle(x,y,100,140);
 	}
 	
 	public void displayCard(Graphics g, int x, int y, double rotation){
 		/**
 		 * use commented line once uno cards are found
 		 */
+		
+		this.x = x;
+		this.y = y;
 		if(rotation == 90){
 			g.drawImage(ImageUtils.rotate(image,Math.toRadians(rotation)),
 					x, y, 140, 100, null);

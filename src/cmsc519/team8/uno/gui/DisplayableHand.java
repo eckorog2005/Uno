@@ -1,25 +1,45 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Card;
 import cmsc519.team8.uno.data.Hand;
 
-public class DisplayableHand {
+public class DisplayableHand extends JPanel {
+	
+	/**
+	 * uuid
+	 */
+	private static final long serialVersionUID = -7808675344590554340L;
 	
 	private final int HAND_LENGTH = 500;
-	private final int CARD_SELECT_HEIGHT = 50; 
 	private final int CARD_WIDTH = 100;
+	private final int CARD_SELECT_HEIGHT = 20; 
 	private boolean isUser = false;
+	private boolean inverted = false;
+	private boolean switchX = false;
+	private int topX = 0;
+	private int topY = 0;
 	private BufferedImage image = null;
+	private ArrayList<DisplayableCard> cards;
 
-	DisplayableHand(boolean isUser){
+	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted, 
+			boolean switchX){
 		hand = new Hand();
 		this.isUser = isUser;
+		this.inverted = inverted;
+		this.switchX = switchX;
+		this.topX = topX;
+		this.topY = topY;
 		if(!isUser){
 			try {
 				image = 
@@ -30,6 +50,8 @@ public class DisplayableHand {
 				e.printStackTrace();
 			}
 		}
+		
+		addMouseListener(new MouseController());
 	}
 	
 	private Hand hand;
@@ -42,8 +64,10 @@ public class DisplayableHand {
 		hand.addCard(card.getCard());
 	}
 	
-	public void displayHand(Graphics g, int topX, int topY, boolean inverted, 
-			boolean switchX){
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
 		int spacing = 45;
 		int x = 0;
 		int y = 0;
@@ -80,13 +104,24 @@ public class DisplayableHand {
 			}
 		}
 		
+		cards = null;
+		cards = new ArrayList<DisplayableCard>();
+		
 		for(Card card : hand.getCards()){
 			if(isUser){
 				DisplayableCard dCard = new DisplayableCard(card);
+				cards.add(dCard);
 				if(switchX){
 					dCard.displayCard(g, topX + x, topY + y, 90);
 				}else{
-					dCard.displayCard(g, topX + x, topY + y, 0);
+					int actualY = y + CARD_SELECT_HEIGHT;
+					
+					
+					if(card.equals(hand.getSelectedCard())){
+						actualY -= CARD_SELECT_HEIGHT;
+					}
+					
+					dCard.displayCard(g, x, actualY, 0);
 				}
 			}else{
 				if(switchX){
@@ -111,4 +146,31 @@ public class DisplayableHand {
 			}
 		}
 	}
+	
+	
+	//needs to detect if its the users turn somehow
+	private class MouseController extends MouseAdapter
+    {
+        public void mouseClicked(MouseEvent me)
+        {           
+            Point point = me.getPoint();
+            DisplayableCard prev = null;
+
+            for(DisplayableCard card : cards){
+            	if(card.getUserCardRectangle().contains(point)){
+            		prev = card;
+            	}else if(prev != null && 
+            			!card.getUserCardRectangle().contains(point)){
+            		hand.setSelectedCard(prev.getCard());
+            		repaint();
+            		return;
+            	}
+            }
+            
+            if(prev != null){
+        		hand.setSelectedCard(prev.getCard());
+        		repaint();
+        	}
+        }
+    }
 }
