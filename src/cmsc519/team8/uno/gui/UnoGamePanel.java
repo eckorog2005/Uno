@@ -83,6 +83,24 @@ public class UnoGamePanel extends JPanel {
 			computer2.addCard(displayableDeck.drawCard());
 			computer3.addCard(displayableDeck.drawCard());
 		}
+		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+	}
+	
+	//returns true if card can be played
+	public boolean playUserCard(DisplayableCard selectCard){
+		
+		if(displayableDiscardPile.getDiscardCard() == null){
+			return false;
+		}
+		
+		boolean isPlayable = selectCard.getCard().isPlayable(
+				displayableDiscardPile.getDiscardCard().getCard());
+		
+		if(isPlayable){
+			displayableDiscardPile.setDiscardCard(userHand.removeCard());
+			repaint();
+		}
+		return isPlayable;
 	}
 	
 	private class MouseController extends MouseAdapter

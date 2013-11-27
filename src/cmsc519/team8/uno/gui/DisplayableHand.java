@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Card;
@@ -57,11 +58,15 @@ public class DisplayableHand extends JPanel {
 	private Hand hand;
 
 	public DisplayableCard removeCard() {
-		return new DisplayableCard(hand.getSelectedCard());
+		DisplayableCard card = new DisplayableCard(hand.getSelectedCard());
+		hand.removeCard(card.getCard());
+		repaint();
+		return card;
 	}
 
 	public void addCard(DisplayableCard card) {
 		hand.addCard(card.getCard());
+		repaint();
 	}
 	
 	@Override
@@ -161,15 +166,39 @@ public class DisplayableHand extends JPanel {
             		prev = card;
             	}else if(prev != null && 
             			!card.getUserCardRectangle().contains(point)){
-            		hand.setSelectedCard(prev.getCard());
-            		repaint();
-            		return;
+            		if(prev.getCard().equals(hand.getSelectedCard())){
+            			if(!((UnoGamePanel)getParent()).playUserCard(prev)){
+            				//display warning
+            				JOptionPane.showMessageDialog(
+         	    	    		   null, 
+         	    	    		   "Unable to play selected card, Please try "
+         	    	    		   + "again", "UNO Error", 
+         	    	    		   JOptionPane.ERROR_MESSAGE);
+            				return;
+            			}
+            		}else{
+            			hand.setSelectedCard(prev.getCard());
+            			repaint();
+            			return;
+            		}
             	}
             }
             
             if(prev != null){
-        		hand.setSelectedCard(prev.getCard());
-        		repaint();
+            	if(prev.getCard().equals(hand.getSelectedCard())){
+        			if(!((UnoGamePanel)getParent()).playUserCard(prev)){
+        				//display warning
+        				JOptionPane.showMessageDialog(
+     	    	    		   null, 
+     	    	    		   "Unable to play selected card, Please try "
+     	    	    		   + "again", "UNO Error", 
+     	    	    		   JOptionPane.ERROR_MESSAGE);
+        				return;
+        			}
+            	}else{
+            		hand.setSelectedCard(prev.getCard());
+        			repaint();
+            	}
         	}
         }
     }
