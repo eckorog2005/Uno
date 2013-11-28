@@ -119,4 +119,10 @@ public class UnoGamePanel extends JPanel {
 		}
 		return isPlayable;
 	}
+	
+	public void drawUserCard(){
+		//TODO check if user turn
+		
+		userHand.addCard(displayableDeck.drawCard());
+	}
 }

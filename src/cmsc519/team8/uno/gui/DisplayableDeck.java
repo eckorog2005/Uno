@@ -2,6 +2,8 @@ package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,6 +23,7 @@ public class DisplayableDeck extends JPanel {
 		String filename = "/images/unoCards/UNO BACK.JPG";
 		image = 
         		new ImageIcon(getClass().getResource(filename)).getImage();
+		addMouseListener(new MouseController());
 	}
 
 	private Deck deck;
@@ -43,4 +46,12 @@ public class DisplayableDeck extends JPanel {
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, 100, 140, null);
 	}
+	
+	private class MouseController extends MouseAdapter
+    {
+        public void mouseClicked(MouseEvent me)
+        {   
+        	((UnoGamePanel)getParent()).drawUserCard();
+        }
+    }
 }
