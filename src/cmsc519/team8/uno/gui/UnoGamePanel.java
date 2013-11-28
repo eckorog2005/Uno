@@ -1,9 +1,6 @@
 package cmsc519.team8.uno.gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -92,8 +89,18 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(430, 200);
 		add(displayableDiscardPile);
 		
-		
 		//testing purposes
+		shuffle();
+		deal();
+	}
+	
+	public void shuffle(){
+		Deck deck = new Deck();
+		deck.shuffle();
+		displayableDeck.setDeck(deck);
+	}
+	
+	public void deal(){
 		for(int i = 0; i<7;i++){
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());

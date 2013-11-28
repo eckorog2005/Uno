@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import cmsc519.team8.uno.data.Card;
 import cmsc519.team8.uno.data.Hand;
 
 public class DisplayableHand extends JPanel {
