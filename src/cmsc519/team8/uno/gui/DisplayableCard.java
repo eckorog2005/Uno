@@ -51,11 +51,7 @@ public class DisplayableCard{
 		return new Rectangle(x,y,100,140);
 	}
 	
-	public void displayCard(Graphics g, int x, int y, double rotation){
-		/**
-		 * use commented line once uno cards are found
-		 */
-		
+	public void displayCard(Graphics g, int x, int y, double rotation){		
 		this.x = x;
 		this.y = y;
 		if(rotation == 90){

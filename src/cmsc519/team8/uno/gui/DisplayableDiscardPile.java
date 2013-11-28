@@ -4,10 +4,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import cmsc519.team8.uno.data.Card;
 
-public class DisplayableDiscardPile {
+public class DisplayableDiscardPile extends JPanel {
+
+	/**
+	 * UID
+	 */
+	private static final long serialVersionUID = -6588966950766522126L;
+
 
 	DisplayableDiscardPile(DisplayableCard discard){
 		this.setDiscardCard(discard);
@@ -25,6 +32,7 @@ public class DisplayableDiscardPile {
 
 	public void setDiscardCard(DisplayableCard discard) {
 		this.discard = discard;
+		repaint();
 	}
 	
 	public DisplayableCard getDiscardCard() {
@@ -33,14 +41,17 @@ public class DisplayableDiscardPile {
 	
 	public void clearDiscardPile(){
 		discard = null;
+		repaint();
 	}
 	
-	public void displayDiscardPile(Graphics g, int x, int y){
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 
 		if(discard != null){
-			discard.displayCard(g, x, y, 0);
+			discard.displayCard(g, 0, 0, 0);
 		}else{        
-			g.drawImage(noCards, x, y, 100, 140, null);
+			g.drawImage(noCards, 0, 0, 100, 140, null);
 		}
 	}
 }

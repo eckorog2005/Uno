@@ -32,11 +32,6 @@ public class UnoGamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	displayableDeck.displayDeck(g, 260, 200);
-        displayableDiscardPile.displayDiscardPile(g, 430, 200);
-        computer1.paintComponent(g);
-        computer2.paintComponent(g);
-        computer3.paintComponent(g);
     }
      
 	/**
@@ -45,6 +40,7 @@ public class UnoGamePanel extends JPanel {
 	public UnoGamePanel() {
 		this.setLayout(null);
 		
+		//add labels
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(30, 20);
 		lblUser.setLocation(388, 360);
@@ -69,13 +65,33 @@ public class UnoGamePanel extends JPanel {
 		lblCpu3.setVisible(true);
 		add(lblCpu3);
 		
+		//add hands
 		userHand.setSize(500, 160);
 		userHand.setLocation(150, 380);
 		add(userHand);
+		
+		computer1.setSize(140, 500);
+		computer1.setLocation(0, 25);
 		add(computer1);
+		
+		computer2.setSize(500, 140);
+		computer2.setLocation(150, 0);
 		add(computer2);
+		
+		computer3.setSize(140, 500);
+		computer3.setLocation(650, 25);
 		add(computer3);
-		addMouseListener(new MouseController());
+		
+		
+		//add discard and deck
+		displayableDeck.setSize(100, 140);
+		displayableDeck.setLocation(260, 200);
+		add(displayableDeck);
+		
+		displayableDiscardPile.setSize(100, 140);
+		displayableDiscardPile.setLocation(430, 200);
+		add(displayableDiscardPile);
+		
 		
 		//testing purposes
 		for(int i = 0; i<7;i++){
@@ -98,21 +114,9 @@ public class UnoGamePanel extends JPanel {
 				displayableDiscardPile.getDiscardCard().getCard());
 		
 		if(isPlayable){
-			displayableDiscardPile.setDiscardCard(userHand.removeCard());
-			repaint();
+			DisplayableCard card = userHand.removeCard();
+			displayableDiscardPile.setDiscardCard(card);
 		}
 		return isPlayable;
 	}
-	
-	private class MouseController extends MouseAdapter
-    {
-        public void mouseClicked(MouseEvent me)
-        {           
-            int xHitOnPanel = me.getX();
-            int yHitOnPanel = me.getY();
-
-//            if (boundsForMouse.contains(xHitOnPanel, yHitOnPanel))
-//                imageIndex = setImage(imageIndex);
-        }
-    }
 }

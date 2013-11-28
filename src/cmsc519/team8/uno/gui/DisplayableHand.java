@@ -28,10 +28,9 @@ public class DisplayableHand extends JPanel {
 	private boolean isUser = false;
 	private boolean inverted = false;
 	private boolean switchX = false;
-	private int topX = 0;
-	private int topY = 0;
 	private BufferedImage image = null;
 	private ArrayList<DisplayableCard> cards;
+	private DisplayableCard cardSelected;
 
 	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted, 
 			boolean switchX){
@@ -39,8 +38,7 @@ public class DisplayableHand extends JPanel {
 		this.isUser = isUser;
 		this.inverted = inverted;
 		this.switchX = switchX;
-		this.topX = topX;
-		this.topY = topY;
+		cards = new ArrayList<DisplayableCard>();
 		if(!isUser){
 			try {
 				image = 
@@ -58,14 +56,15 @@ public class DisplayableHand extends JPanel {
 	private Hand hand;
 
 	public DisplayableCard removeCard() {
-		DisplayableCard card = new DisplayableCard(hand.getSelectedCard());
-		hand.removeCard(card.getCard());
+		hand.removeCard(cardSelected.getCard());
+		cards.remove(cardSelected);
 		repaint();
-		return card;
+		return cardSelected;
 	}
 
 	public void addCard(DisplayableCard card) {
 		hand.addCard(card.getCard());
+		cards.add(card);
 		repaint();
 	}
 	
@@ -76,7 +75,7 @@ public class DisplayableHand extends JPanel {
 		int spacing = 45;
 		int x = 0;
 		int y = 0;
-		int handSize = hand.getCards().size();
+		int handSize = cards.size();
 		
 		do{
 			spacing -= 5;
@@ -109,20 +108,15 @@ public class DisplayableHand extends JPanel {
 			}
 		}
 		
-		cards = null;
-		cards = new ArrayList<DisplayableCard>();
-		
-		for(Card card : hand.getCards()){
+		for(DisplayableCard dCard : cards){
 			if(isUser){
-				DisplayableCard dCard = new DisplayableCard(card);
-				cards.add(dCard);
 				if(switchX){
-					dCard.displayCard(g, topX + x, topY + y, 90);
+					dCard.displayCard(g, x, y, 90);
 				}else{
 					int actualY = y + CARD_SELECT_HEIGHT;
 					
 					
-					if(card.equals(hand.getSelectedCard())){
+					if(dCard.equals(cardSelected)){
 						actualY -= CARD_SELECT_HEIGHT;
 					}
 					
@@ -132,17 +126,17 @@ public class DisplayableHand extends JPanel {
 				if(switchX){
 					if (inverted){
 						g.drawImage(ImageUtils.rotate(image,Math.toRadians(-90)),
-								topX + x, topY + y, 140, 100, null);
+								x, y, 140, 100, null);
 					}else{
 						g.drawImage(ImageUtils.rotate(image,Math.toRadians(90)),
-								topX + x, topY + y, 140, 100, null);
+								x, y, 140, 100, null);
 					}
 				}else{
 					if (inverted){
 						g.drawImage(ImageUtils.rotate(image,Math.toRadians(180)),
-								topX + x, topY + y, 100, 140, null);
+								x, y, 100, 140, null);
 					}else{
-						g.drawImage(image, topX + x, topY + y, 100, 140, null);
+						g.drawImage(image, x, y, 100, 140, null);
 					}
 				}
 			}
@@ -184,13 +178,13 @@ public class DisplayableHand extends JPanel {
          	    	    		   "Unable to play selected card, Please try "
          	    	    		   + "again", "UNO Error", 
          	    	    		   JOptionPane.ERROR_MESSAGE);
-            				return;
             			}
             		}else{
             			hand.setSelectedCard(prev.getCard());
+            			cardSelected = prev;
             			repaint();
-            			return;
             		}
+            		return;
             	}
             }
             
@@ -207,6 +201,7 @@ public class DisplayableHand extends JPanel {
         			}
             	}else{
             		hand.setSelectedCard(prev.getCard());
+            		cardSelected = prev;
         			repaint();
             	}
         	}
