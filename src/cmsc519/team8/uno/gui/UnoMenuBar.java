@@ -26,59 +26,59 @@ public class UnoMenuBar extends JMenuBar {
 	 */
 	public UnoMenuBar() {
 		super();
-		
+
 		//add game option menu
 		JMenu menu = new JMenu("Game");
-		
+
 		//quit button
 		JMenuItem close = new JMenuItem("Exit");
-		
-	    close.addActionListener(
-	    	      new ActionListener() {
-	    	        public void actionPerformed(ActionEvent e) {
-	    	          System.exit(0);
-	    	        }
-	    	      }
-	    	    );
-	    menu.add(close);
-	    	    
+
+		close.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						System.exit(0);
+					}
+				}
+				);
+		menu.add(close);
+
 		//help option
 		JMenuItem help = new JMenuItem("Help");
 		help.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent actionEvent) {
-	        	try{
-	    		String location = "/cmsc519/team8/uno/data/UnoManual.txt";
-	    	    BufferedReader br = new BufferedReader(
-	    	    		new InputStreamReader(
-	    	    				this.getClass().getResourceAsStream(location)));
-	    	    JTextArea textArea = new JTextArea(40,50);
-	    	    String line = br.readLine();
-	    	    String newline = "\n";
-	    	    textArea.setLineWrap( true );
-	    	    textArea.setWrapStyleWord( true );
-	    	    
-	    	    while ((line = br.readLine()) != null) {  
-	    	        if ( line.trim().length() == 0 ) {  
-	    	          textArea.append(newline);
-	    	        }
-	    	        	textArea.append(line + newline);
-	    	      }  
-	    	    br.close();
-	    		
-	    	    JOptionPane.showMessageDialog(
-	    	    		   null, textArea, "UNO Help", 
-	    	    		   JOptionPane.INFORMATION_MESSAGE);
-	        	}catch(IOException e){
-	        		//do something if the file is not found
-	        	}
-	        }
+			public void actionPerformed(ActionEvent actionEvent) {
+				try{
+					String location = "/cmsc519/team8/uno/data/UnoManual.txt";
+					BufferedReader br = new BufferedReader(
+							new InputStreamReader(
+									this.getClass().getResourceAsStream(location)));
+					JTextArea textArea = new JTextArea(40,50);
+					String line = br.readLine();
+					String newline = "\n";
+					textArea.setLineWrap( true );
+					textArea.setWrapStyleWord( true );
+
+					while ((line = br.readLine()) != null) {  
+						if ( line.trim().length() == 0 ) {  
+							textArea.append(newline);
+						}
+						textArea.append(line + newline);
+					}  
+					br.close();
+
+					JOptionPane.showMessageDialog(
+							null, textArea, "UNO Help", 
+							JOptionPane.INFORMATION_MESSAGE);
+				}catch(IOException e){
+					//do something if the file is not found
+				}
+			}
 		});
-		
+
 		add(menu);
 		add(help);
 	}
-	
-	
-	
+
+
+
 
 }

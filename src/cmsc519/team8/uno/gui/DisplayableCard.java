@@ -10,10 +10,10 @@ import javax.imageio.ImageIO;
 import cmsc519.team8.uno.data.Card;
 
 public class DisplayableCard{
-	
+
 	DisplayableCard(Card card){
 		this.card = card;
-		
+
 		String filename = "/images/unoCards/UNO" + card.getCardColor() +
 				" " + card.getCardValue() + ".png";
 		try {
@@ -29,7 +29,7 @@ public class DisplayableCard{
 	private BufferedImage image;
 	private int x;
 	private int y;
-	
+
 	public BufferedImage getImage(){
 		return image;
 	}
@@ -37,11 +37,11 @@ public class DisplayableCard{
 	public Card getCard() {
 		return card;
 	}
-	
+
 	public Rectangle getUserCardRectangle(){
 		return new Rectangle(x,y,100,140);
 	}
-	
+
 	public void displayCard(Graphics g, int x, int y, double rotation){		
 		this.x = x;
 		this.y = y;

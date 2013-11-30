@@ -15,12 +15,12 @@ import javax.swing.JPanel;
 import cmsc519.team8.uno.data.Hand;
 
 public class DisplayableHand extends JPanel {
-	
+
 	/**
-	 * uuid
+	 * UID
 	 */
 	private static final long serialVersionUID = -7808675344590554340L;
-	
+
 	private final int HAND_LENGTH = 500;
 	private final int CARD_WIDTH = 100;
 	private final int CARD_SELECT_HEIGHT = 20; 
@@ -40,18 +40,17 @@ public class DisplayableHand extends JPanel {
 		cards = new ArrayList<DisplayableCard>();
 		if(!isUser){
 			try {
-				image = 
-						ImageIO.read(getClass().getResource
-								("/images/unoCards/UNO BACK.JPG"));
+				image = ImageIO.read(getClass().getResource
+						("/images/unoCards/UNO BACK.JPG"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		addMouseListener(new MouseController());
 	}
-	
+
 	private Hand hand;
 
 	public DisplayableCard removeCard() {
@@ -66,19 +65,19 @@ public class DisplayableHand extends JPanel {
 		cards.add(card);
 		repaint();
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		int spacing = 45;
 		int x = 0;
 		int y = 0;
 		int handSize = cards.size();
-		
+
 		do{
 			spacing -= 5;
-			
+
 			//figure out starting placement
 			if(handSize % 2 == 0){
 				if(switchX){
@@ -98,7 +97,7 @@ public class DisplayableHand extends JPanel {
 				}
 			}
 		}while((x < 0 || y < 0) && spacing > 0);
-		
+
 		if(inverted){
 			if(switchX){
 				y += (spacing * (handSize-1));
@@ -106,19 +105,19 @@ public class DisplayableHand extends JPanel {
 				x += (spacing * (handSize-1));
 			}
 		}
-		
+
 		for(DisplayableCard dCard : cards){
 			if(isUser){
 				if(switchX){
 					dCard.displayCard(g, x, y, 90);
 				}else{
 					int actualY = y + CARD_SELECT_HEIGHT;
-					
-					
+
+
 					if(dCard.equals(cardSelected)){
 						actualY -= CARD_SELECT_HEIGHT;
 					}
-					
+
 					dCard.displayCard(g, x, actualY, 0);
 				}
 			}else{
@@ -154,56 +153,57 @@ public class DisplayableHand extends JPanel {
 			}
 		}
 	}
-	
-	
+
+
 	//needs to detect if its the users turn somehow
 	private class MouseController extends MouseAdapter
-    {
-        public void mouseClicked(MouseEvent me)
-        {           
-            Point point = me.getPoint();
-            DisplayableCard prev = null;
+	{
+		public void mouseClicked(MouseEvent me)
+		{           
+			Point point = me.getPoint();
+			DisplayableCard prev = null;
 
-            for(DisplayableCard card : cards){
-            	if(card.getUserCardRectangle().contains(point)){
-            		prev = card;
-            	}else if(prev != null && 
-            			!card.getUserCardRectangle().contains(point)){
-            		if(prev.getCard().equals(hand.getSelectedCard())){
-            			if(!((UnoGamePanel)getParent()).playUserCard(prev)){
-            				//display warning
-            				JOptionPane.showMessageDialog(
-         	    	    		   null, 
-         	    	    		   "Unable to play selected card, Please try "
-         	    	    		   + "again", "UNO Error", 
-         	    	    		   JOptionPane.ERROR_MESSAGE);
-            			}
-            		}else{
-            			hand.setSelectedCard(prev.getCard());
-            			cardSelected = prev;
-            			repaint();
-            		}
-            		return;
-            	}
-            }
-            
-            if(prev != null){
-            	if(prev.getCard().equals(hand.getSelectedCard())){
-        			if(!((UnoGamePanel)getParent()).playUserCard(prev)){
-        				//display warning
-        				JOptionPane.showMessageDialog(
-     	    	    		   null, 
-     	    	    		   "Unable to play selected card, Please try "
-     	    	    		   + "again", "UNO Error", 
-     	    	    		   JOptionPane.ERROR_MESSAGE);
-        				return;
-        			}
-            	}else{
-            		hand.setSelectedCard(prev.getCard());
-            		cardSelected = prev;
-        			repaint();
-            	}
-        	}
-        }
-    }
+			for(DisplayableCard card : cards){
+				if(card.getUserCardRectangle().contains(point)){
+					prev = card;
+				}else if(prev != null && 
+						!card.getUserCardRectangle().contains(point)){
+					if(prev.getCard().equals(hand.getSelectedCard())){
+						if(!((UnoGamePanel)getParent()).playUserCard(prev)){
+							//display warning
+							JOptionPane.showMessageDialog(
+									null, 
+									"Unable to play selected card, Please try "
+											+ "again", "UNO Error", 
+											JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						hand.setSelectedCard(prev.getCard());
+						cardSelected = prev;
+						repaint();
+					}
+					return;
+				}
+			}
+
+			if(prev != null){
+				if(prev.getCard().equals(hand.getSelectedCard())){
+					if(!((UnoGamePanel)getParent()).playUserCard(prev)){
+						//display warning
+						JOptionPane.showMessageDialog(
+								null, 
+								"Unable to play selected card, Please try "
+										+ "again", "UNO Error", 
+										JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}else{
+					hand.setSelectedCard(prev.getCard());
+					cardSelected = prev;
+					repaint();
+				}
+			}
+		}
+	}
+
 }
