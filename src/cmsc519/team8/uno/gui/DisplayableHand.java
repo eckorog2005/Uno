@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -30,6 +31,8 @@ public class DisplayableHand extends JPanel {
 	private BufferedImage image = null;
 	private ArrayList<DisplayableCard> cards;
 	private DisplayableCard cardSelected;
+	private Hand hand;
+	private JLabel label;
 
 	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted, 
 			boolean switchX){
@@ -38,6 +41,7 @@ public class DisplayableHand extends JPanel {
 		this.inverted = inverted;
 		this.switchX = switchX;
 		cards = new ArrayList<DisplayableCard>();
+		this.label = null;
 		if(!isUser){
 			try {
 				image = 
@@ -52,18 +56,27 @@ public class DisplayableHand extends JPanel {
 		addMouseListener(new MouseController());
 	}
 	
-	private Hand hand;
+	public void setLabel(JLabel label){
+		this.label = label;
+	}
 
 	public DisplayableCard removeCard() {
 		hand.removeCard(cardSelected.getCard());
 		cards.remove(cardSelected);
 		repaint();
+		if(cards.size() == 1 && label != null){
+			label.setText(label.getText().concat(" *UNO*"));
+			System.out.println(label.getFont().toString());
+		}
 		return cardSelected;
 	}
 
 	public void addCard(DisplayableCard card) {
 		hand.addCard(card.getCard());
 		cards.add(card);
+		if(cards.size() == 2 && label != null){
+			label.setText(label.getText().replace(" *UNO*", ""));
+		}
 		repaint();
 	}
 	

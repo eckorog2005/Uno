@@ -15,6 +15,8 @@ public class UnoGamePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -8758461344572468847L;
 
+	private final int HAND_SIZE = 7;
+	
     private final DisplayableDeck displayableDeck = 
     		new DisplayableDeck(new Deck());
 
@@ -39,44 +41,48 @@ public class UnoGamePanel extends JPanel {
 		
 		//add labels
 		JLabel lblUser = new JLabel("User");
-		lblUser.setSize(30, 20);
+		lblUser.setSize(70, 20);
 		lblUser.setLocation(388, 360);
 		lblUser.setVisible(true);
 		add(lblUser);
 		
 		JLabel lblCpu1 = new JLabel("Computer1");
-		lblCpu1.setSize(70, 20);
+		lblCpu1.setSize(110, 20);
 		lblCpu1.setLocation(150, 250);
 		lblCpu1.setVisible(true);
 		add(lblCpu1);
 		
 		JLabel lblCpu2 = new JLabel("Computer2");
-		lblCpu2.setSize(70, 20);
+		lblCpu2.setSize(110, 20);
 		lblCpu2.setLocation(365, 150);
 		lblCpu2.setVisible(true);
 		add(lblCpu2);
 		
 		JLabel lblCpu3 = new JLabel("Computer3");
-		lblCpu3.setSize(70, 20);
-		lblCpu3.setLocation(570, 250);
+		lblCpu3.setSize(110, 20);
+		lblCpu3.setLocation(540, 250);
 		lblCpu3.setVisible(true);
 		add(lblCpu3);
 		
 		//add hands
 		userHand.setSize(500, 160);
 		userHand.setLocation(150, 380);
+		userHand.setLabel(lblUser);
 		add(userHand);
 		
 		computer1.setSize(140, 500);
 		computer1.setLocation(0, 25);
+		computer1.setLabel(lblCpu1);
 		add(computer1);
 		
 		computer2.setSize(500, 140);
 		computer2.setLocation(150, 0);
+		computer2.setLabel(lblCpu2);
 		add(computer2);
 		
 		computer3.setSize(140, 500);
 		computer3.setLocation(650, 25);
+		computer3.setLabel(lblCpu3);
 		add(computer3);
 		
 		
@@ -86,7 +92,7 @@ public class UnoGamePanel extends JPanel {
 		add(displayableDeck);
 		
 		displayableDiscardPile.setSize(100, 140);
-		displayableDiscardPile.setLocation(430, 200);
+		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 		
 		//testing purposes
@@ -101,7 +107,7 @@ public class UnoGamePanel extends JPanel {
 	}
 	
 	public void deal(){
-		for(int i = 0; i<7;i++){
+		for(int i = 0; i<HAND_SIZE; i++){
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());
 			computer2.addCard(displayableDeck.drawCard());
@@ -124,6 +130,7 @@ public class UnoGamePanel extends JPanel {
 			DisplayableCard card = userHand.removeCard();
 			displayableDiscardPile.setDiscardCard(card);
 		}
+		
 		return isPlayable;
 	}
 	
