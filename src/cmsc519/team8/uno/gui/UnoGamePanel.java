@@ -2,8 +2,11 @@ package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import cmsc519.team8.uno.data.CardColorEnum;
+import cmsc519.team8.uno.data.CardValueEnum;
 import cmsc519.team8.uno.data.Deck;
 
 import javax.swing.JLabel;
@@ -127,12 +130,41 @@ public class UnoGamePanel extends JPanel {
 				displayableDiscardPile.getDiscardCard().getCard());
 		
 		if(isPlayable){
+			if(selectCard.getCard().getCardValue().equals(CardValueEnum.WILD)){
+				selectCard.getCard().setWildColor(wildSelector());
+			}
+			
 			DisplayableCard card = userHand.removeCard();
 			displayableDiscardPile.setDiscardCard(card);
 		}
 		
 		return isPlayable;
 	}
+	
+	public CardColorEnum wildSelector(){
+		Object[] possibleValues = { "RED","BLUE","YELLOW","GREEN" };
+		String selectedValue = "";
+		CardColorEnum returnValue = CardColorEnum.BLACK;
+		int flags = 0;
+		
+		while(flags < 1){
+		selectedValue = (String)JOptionPane.showInputDialog(null,
+
+		        "Select a color", "Wild Card!",
+
+		        JOptionPane.INFORMATION_MESSAGE, null,
+
+		        possibleValues, possibleValues[0]);
+		if(selectedValue != null){
+			returnValue = CardColorEnum.valueOf(selectedValue);
+			flags++;
+		}
+		/* We don't want them to cancel the color selection,
+		so if they do, we loop back and ask again */
+		}
+		return returnValue;	    
+	}
+
 	
 	public void drawUserCard(){
 		//TODO check if user turn
