@@ -11,18 +11,29 @@ public class Card {
 	public Card(){
 		this.cardValue = CardValueEnum.WILD;
 		this.cardColor = CardColorEnum.BLACK;
+		this.wildColor = CardColorEnum.BLACK;
 	}
 	
 	public Card(CardValueEnum value, CardColorEnum color){
 		this.cardValue = value;
 		this.cardColor = color;
+		this.wildColor = CardColorEnum.BLACK;
 	}
 	
 	private CardValueEnum cardValue;
 	private CardColorEnum cardColor;
+	private CardColorEnum wildColor;
 	
 	public CardValueEnum getCardValue() {
 		return cardValue;
+	}
+	
+	public CardColorEnum getWildColor(){
+		return wildColor;
+	}
+	
+	public void setWildColor(CardColorEnum wildColor){
+		this.wildColor = wildColor;
 	}
 
 	public void setCardValue(CardValueEnum cardValue) {
@@ -49,6 +60,8 @@ public class Card {
 			return true;
 		}else if(this.cardColor.equals(otherCard.cardColor)){
 			return true;
+		}else if(this.cardColor.equals(otherCard.wildColor)){
+			return true;
 		}else{
 			return false;
 		}
@@ -56,10 +69,10 @@ public class Card {
 	
 	@Override
 	public String toString(){
-		return this.cardValue + " " + this.cardColor;
+		return this.cardColor + " " + this.cardValue;
 	}
 	
-		public String getCardImg(){
+	public String getCardImg(){
 		return "UNO" + this.cardColor + " " +this.cardValue;
 	}
 }
