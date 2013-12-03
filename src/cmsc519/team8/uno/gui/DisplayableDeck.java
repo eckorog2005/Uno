@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -36,7 +38,7 @@ public class DisplayableDeck extends JPanel {
 		this.deck = deck;
 	}
 
-	public DisplayableCard drawCard(){
+	public DisplayableCard drawCard() {
 		if(deck.getSize() == 1){
 			((UnoGamePanel)getParent()).deckEmpty();
 		}

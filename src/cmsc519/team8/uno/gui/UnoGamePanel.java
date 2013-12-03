@@ -1,6 +1,9 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -301,10 +304,30 @@ public class UnoGamePanel extends JPanel {
 				if (selectedValue.equals("Quit")) {
 					System.exit(0);
 				} else {
-					// TODO restart game
+					try {
+						restart();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
+	}
+	
+	public void restart() throws IOException, InterruptedException {
+	        StringBuilder cmd = new StringBuilder();
+	        cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
+	        for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+	            cmd.append(jvmArg + " ");
+	        }
+	        cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+	        cmd.append(MainFrame.class.getName()).append(" ");
+	        Runtime.getRuntime().exec(cmd.toString());
+	        System.exit(0);
 	}
 
 	private String findWinner() {

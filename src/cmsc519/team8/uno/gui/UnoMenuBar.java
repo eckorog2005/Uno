@@ -30,9 +30,27 @@ public class UnoMenuBar extends JMenuBar {
 		//add game option menu
 		JMenu menu = new JMenu("Game");
 
+		//restart button
+		JMenuItem restart = new JMenuItem("Restart");
 		//quit button
 		JMenuItem close = new JMenuItem("Exit");
 
+
+		restart.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							new UnoGamePanel().restart();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+				);
 		close.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -40,6 +58,7 @@ public class UnoMenuBar extends JMenuBar {
 					}
 				}
 				);
+		menu.add(restart);
 		menu.add(close);
 
 		//help option
