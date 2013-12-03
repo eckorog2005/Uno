@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import cmsc519.team8.uno.data.CardColorEnum;
 import cmsc519.team8.uno.data.Hand;
 
 public class DisplayableHand extends JPanel {
@@ -33,6 +34,15 @@ public class DisplayableHand extends JPanel {
 	private DisplayableCard cardSelected;
 	private Hand hand;
 	private JLabel label;
+	private boolean hasDrawnCardAlready = false;
+
+	public boolean hasDrawnCardAlready() {
+		return hasDrawnCardAlready;
+	}
+
+	public void setHasDrawnCardAlready(boolean hasDrawnCardAlready) {
+		this.hasDrawnCardAlready = hasDrawnCardAlready;
+	}
 
 	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted, 
 			boolean switchX){
@@ -219,4 +229,63 @@ public class DisplayableHand extends JPanel {
         	}
         }
     }
+
+	public void removeComputerCard(DisplayableCard prev)
+	{
+		System.out.println("Sucessfully removed");
+		hand.setSelectedCard(prev.getCard());
+		cardSelected = prev;
+		repaint();
+	}
+
+	public ArrayList<DisplayableCard> getTotalNumbCard() {
+		return cards;
+	}
+	
+	public String toString(int i){
+		return cards.toString();
+	}
+
+	public DisplayableCard getCurrentCard(int i) {
+		// TODO Auto-generated method stub
+		return cards.get(i);
+	}
+	
+	public void setWildCardValue(DisplayableCard card){
+		int blue = 0;
+		int yellow = 0;
+		int red = 0;
+		int green = 0;
+		
+		for(DisplayableCard c : cards){
+			switch(c.getCard().getCardColor()){
+			case BLUE:
+				blue++;
+				break;
+			case YELLOW:
+				yellow++;
+				break;
+			case RED:
+				red++;
+				break;
+			case GREEN:
+				green++;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if(blue > yellow && blue > red && blue > green){
+			card.getCard().setWildColor(CardColorEnum.BLUE);
+		}else if(yellow > blue && yellow > red && yellow > green){
+			card.getCard().setWildColor(CardColorEnum.YELLOW);
+		}else if(red > yellow && red > blue && red > green){
+			card.getCard().setWildColor(CardColorEnum.RED);
+		}else if(green > yellow && green > red && green > blue){
+			card.getCard().setWildColor(CardColorEnum.GREEN);
+		}else{
+			card.getCard().setWildColor(CardColorEnum.BLUE);
+		}
+	}
 }
