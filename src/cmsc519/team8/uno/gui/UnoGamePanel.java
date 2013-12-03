@@ -199,7 +199,7 @@ public class UnoGamePanel extends JPanel {
 		}
 
 		//Linear Search to find matching card to be discarded.
-		for(int i=0; i< computer.getTotalNumbCard().size() ; i++){
+		for(int i=0; i< computer.getTotalNumbCard() ; i++){
 
 			DisplayableCard currentCardValue = computer.getCurrentCard(i); 
 			System.out.println("computer card value " + currentCardValue.getCard().toString());
@@ -215,7 +215,7 @@ public class UnoGamePanel extends JPanel {
 				DisplayableCard card = computer.removeCard();
 				displayableDiscardPile.setDiscardCard(card);
 				break;
-			}else if (i== computer.getTotalNumbCard().size()-1 && !isPlayable && 
+			}else if (i== computer.getTotalNumbCard()-1 && !isPlayable && 
 					!computer.hasDrawnCardAlready())
 			{
 				//Gets a card and check for the condition AGAIN!!
@@ -269,5 +269,68 @@ public class UnoGamePanel extends JPanel {
 			userHand.setHasDrawnCardAlready(true);
 			userHand.addCard(displayableDeck.drawCard());
 		}
+	}
+	
+	public void deckEmpty(){
+		Object[] possibleValues = { "Restart", "Quit" };
+		boolean selectionMade = false;
+
+		while (!selectionMade) {
+			String selectedValue = (String)JOptionPane.showInputDialog(this, 
+					"Deck is empty, the winner of the game is: \n"
+					+ findWinner() +"\n", 
+					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
+					null, possibleValues, possibleValues[1]);
+			if(selectedValue != null){
+				selectionMade = true;
+				if(selectedValue.equals("Quit")){
+					System.exit(0);
+				}else{
+					//TODO restart game
+				}
+			}
+		}
+	}
+	
+	public void handEmpty(DisplayableHand winner){
+		Object[] possibleValues = { "Restart", "Quit" };
+		boolean selectionMade = false;
+
+		while (!selectionMade) {
+			String selectedValue = (String)JOptionPane.showInputDialog(this, 
+					findWinner() + " has no more cards left, Congratulations", 
+					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
+					null, possibleValues, possibleValues[1]);
+			if(selectedValue != null){
+				selectionMade = true;
+				if(selectedValue.equals("Quit")){
+					System.exit(0);
+				}else{
+					//TODO restart game
+				}
+			}
+		}
+	}
+	
+	private String findWinner(){
+		String winner = null;
+		int maxPoints = Integer.MAX_VALUE;
+		if(userHand.getTotalNumbCard() < maxPoints){
+			winner = userHand.getName();
+			maxPoints = userHand.getTotalNumbCard();
+		}
+		if(computer1.getTotalNumbCard() < maxPoints){
+			winner = computer1.getName();
+			maxPoints = computer1.getTotalNumbCard();
+		}
+		if(computer2.getTotalNumbCard() < maxPoints){
+			winner = computer2.getName();
+			maxPoints = computer2.getTotalNumbCard();
+		}
+		if(computer3.getTotalNumbCard() < maxPoints){
+			winner = computer3.getName();
+			maxPoints = computer3.getTotalNumbCard();
+		}
+		return winner;
 	}
 }

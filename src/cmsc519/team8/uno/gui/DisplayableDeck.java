@@ -37,6 +37,9 @@ public class DisplayableDeck extends JPanel {
 	}
 	
 	public DisplayableCard drawCard(){
+		if(deck.getSize() == 1){
+			((UnoGamePanel)getParent()).deckEmpty();
+		}
 		return new DisplayableCard(deck.drawCard());
 	}
 	
