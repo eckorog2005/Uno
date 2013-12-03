@@ -76,14 +76,14 @@ public class DisplayableHand extends JPanel {
 		return name;
 	}
 
-	public DisplayableCard removeCard() {
+	public DisplayableCard removeCard(boolean inPreGame) {
 		hand.removeCard(cardSelected.getCard());
 		cards.remove(cardSelected);
 		repaint();
 		if(cards.size() == 1 && label != null){
 			label.setText(label.getText().concat(" *UNO*"));
 			System.out.println(label.getFont().toString());
-		}else if(cards.size() == 0){
+		}else if(cards.size() == 0 && !inPreGame){
 			((UnoGamePanel)getParent()).handEmpty(this);
 		}
 		return cardSelected;
