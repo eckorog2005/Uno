@@ -102,8 +102,24 @@ public class UnoGamePanel extends JPanel {
 
 		// testing purposes
 		shuffle();
+		//preGame();
 		deal();
 	}
+
+	private void preGame() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < 1; i++) {
+			userHand.addCard(displayableDeck.drawCard());
+			computer1.addCard(displayableDeck.drawCard());
+			computer2.addCard(displayableDeck.drawCard());
+			computer3.addCard(displayableDeck.drawCard());
+		}
+		//Get values of each players.
+		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+		
+	
+	}
+	
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -119,6 +135,19 @@ public class UnoGamePanel extends JPanel {
 			computer3.addCard(displayableDeck.drawCard());
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+		//Calculate the value of each cards.
+		
+		/**
+		
+		selectCard.getCard().getCardValue()
+		DisplayableCard currentCardValue = computer1.getCurrentCard(0); 
+
+		currentCardValue.getCard().getPregameValue();
+		
+		
+		computer1
+		**/
+		
 	}
 
 	// returns true if card can be played
