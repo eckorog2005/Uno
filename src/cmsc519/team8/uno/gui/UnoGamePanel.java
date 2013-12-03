@@ -275,8 +275,9 @@ public class UnoGamePanel extends JPanel {
 
 		while (!selectionMade) {
 			String selectedValue = (String) JOptionPane.showInputDialog(this,
-					"Deck is empty, the winner of the game is: \n"
-							+ findWinner() + "\n", "GAME OVER",
+					"Deck is empty, the winner of the game is: "
+					+ "\n<HTML><font size=12>"+ findWinner() + 
+					"</font></HTML>\n", "GAME OVER",
 					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
 					possibleValues[1]);
 			if (selectedValue != null) {
@@ -284,7 +285,15 @@ public class UnoGamePanel extends JPanel {
 				if (selectedValue.equals("Quit")) {
 					System.exit(0);
 				} else {
-					// TODO restart game
+					try {
+						restart();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -296,7 +305,9 @@ public class UnoGamePanel extends JPanel {
 
 		while (!selectionMade) {
 			String selectedValue = (String) JOptionPane.showInputDialog(this,
-					findWinner() + " has no more cards left, Congratulations",
+					"Congratulations on winning UNO : \n" +
+					"<HTML><font size=12>"+ findWinner() + 
+					"</font></HTML>\n",
 					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, null,
 					possibleValues, possibleValues[1]);
 			if (selectedValue != null) {
