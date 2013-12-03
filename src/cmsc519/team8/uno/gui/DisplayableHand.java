@@ -246,14 +246,9 @@ public class DisplayableHand extends JPanel {
 		cardSelected = prev;
 		repaint();
 	}
-
-<<<<<<< HEAD
-	public ArrayList<DisplayableCard> getTotalNumbCard() {
-		return cards;
-=======
+	
 	public int getTotalNumbCard() {
 		return cards.size();
->>>>>>> upstream/master
 	}
 	
 	public String toString(int i){
@@ -264,8 +259,6 @@ public class DisplayableHand extends JPanel {
 		// TODO Auto-generated method stub
 		return cards.get(i);
 	}
-<<<<<<< HEAD
-=======
 	
 	public void setWildCardValue(DisplayableCard card){
 		int blue = 0;
@@ -304,5 +297,4 @@ public class DisplayableHand extends JPanel {
 			card.getCard().setWildColor(CardColorEnum.BLUE);
 		}
 	}
->>>>>>> upstream/master
 }
