@@ -176,7 +176,7 @@ public class UnoGamePanel extends JPanel {
 				selectCard.getCard().setWildColor(wildSelector());
 			}
 
-			DisplayableCard card = userHand.removeCard();
+			DisplayableCard card = userHand.removeCard(false);
 			displayableDiscardPile.setDiscardCard(card);
 			userHand.setHasDrawnCardAlready(false);
 			letComputerPlay(computer1);
@@ -212,7 +212,7 @@ public class UnoGamePanel extends JPanel {
 					computer.setWildCardValue(currentCardValue);
 				}
 				computer.removeComputerCard(currentCardValue);
-				DisplayableCard card = computer.removeCard();
+				DisplayableCard card = computer.removeCard(false);
 				displayableDiscardPile.setDiscardCard(card);
 				break;
 			}else if (i== computer.getTotalNumbCard()-1 && !isPlayable && 
