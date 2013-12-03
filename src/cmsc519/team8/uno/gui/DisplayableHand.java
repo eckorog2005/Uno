@@ -1,5 +1,6 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -245,7 +246,7 @@ public class DisplayableHand extends JPanel {
 		cardSelected = prev;
 		repaint();
 	}
-
+	
 	public int getTotalNumbCard() {
 		return cards.size();
 	}

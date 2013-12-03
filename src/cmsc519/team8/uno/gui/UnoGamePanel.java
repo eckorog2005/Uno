@@ -1,6 +1,9 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -102,7 +105,7 @@ public class UnoGamePanel extends JPanel {
 
 		// testing purposes
 		shuffle();
-		//preGame();
+		// preGame();
 		deal();
 	}
 
@@ -114,12 +117,10 @@ public class UnoGamePanel extends JPanel {
 			computer2.addCard(displayableDeck.drawCard());
 			computer3.addCard(displayableDeck.drawCard());
 		}
-		//Get values of each players.
+		// Get values of each players.
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
 
-
 	}
-
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -135,17 +136,16 @@ public class UnoGamePanel extends JPanel {
 			computer3.addCard(displayableDeck.drawCard());
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
-		//Calculate the value of each cards.
+		// Calculate the value of each cards.
 
 		/**
-
-		selectCard.getCard().getCardValue()
-		DisplayableCard currentCardValue = computer1.getCurrentCard(0); 
-
-		currentCardValue.getCard().getPregameValue();
-
-
-		computer1
+		 * selectCard.getCard().getCardValue() DisplayableCard currentCardValue
+		 * = computer1.getCurrentCard(0);
+		 * 
+		 * currentCardValue.getCard().getPregameValue();
+		 * 
+		 * 
+		 * computer1
 		 **/
 
 	}
@@ -156,8 +156,8 @@ public class UnoGamePanel extends JPanel {
 		if (displayableDiscardPile.getDiscardCard() == null) {
 			return false;
 		}
-		
-		if(selectCard == null){
+
+		if (selectCard == null) {
 			userHand.setHasDrawnCardAlready(false);
 			letComputerPlay(computer1);
 			computer1.setHasDrawnCardAlready(false);
@@ -165,7 +165,7 @@ public class UnoGamePanel extends JPanel {
 			computer2.setHasDrawnCardAlready(false);
 			letComputerPlay(computer3);
 			computer3.setHasDrawnCardAlready(false);
-			return true; //just lost turn, no error needed to be shown
+			return true; // just lost turn, no error needed to be shown
 		}
 
 		boolean isPlayable = selectCard.getCard().isPlayable(
@@ -193,45 +193,42 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	private void letComputerPlay(DisplayableHand computer) {
-		
-		if(displayableDiscardPile.getDiscardCard() == null){
+
+		if (displayableDiscardPile.getDiscardCard() == null) {
 			System.out.print("null");
 		}
 
-		//Linear Search to find matching card to be discarded.
-		for(int i=0; i< computer.getTotalNumbCard() ; i++){
+		// Linear Search to find matching card to be discarded.
+		for (int i = 0; i < computer.getTotalNumbCard(); i++) {
 
-			DisplayableCard currentCardValue = computer.getCurrentCard(i); 
-			System.out.println("computer card value " + currentCardValue.getCard().toString());
+			DisplayableCard currentCardValue = computer.getCurrentCard(i);
+			System.out.println("computer card value "
+					+ currentCardValue.getCard().toString());
 
 			boolean isPlayable = currentCardValue.getCard().isPlayable(
 					displayableDiscardPile.getDiscardCard().getCard());
 
-			if(isPlayable){
-				if(currentCardValue.getCard().getCardValue().equals(CardValueEnum.WILD)){
+			if (isPlayable) {
+				if (currentCardValue.getCard().getCardValue()
+						.equals(CardValueEnum.WILD)) {
 					computer.setWildCardValue(currentCardValue);
 				}
 				computer.removeComputerCard(currentCardValue);
 				DisplayableCard card = computer.removeCard(false);
 				displayableDiscardPile.setDiscardCard(card);
 				break;
-			}else if (i== computer.getTotalNumbCard()-1 && !isPlayable && 
-					!computer.hasDrawnCardAlready())
-			{
-				//Gets a card and check for the condition AGAIN!!
+			} else if (i == computer.getTotalNumbCard() - 1 && !isPlayable
+					&& !computer.hasDrawnCardAlready()) {
+				// Gets a card and check for the condition AGAIN!!
 				computer.addCard(displayableDeck.drawCard());
-				computer.setHasDrawnCardAlready(true);			
+				computer.setHasDrawnCardAlready(true);
 			}
-			//What if there is no more card?
-			else if(displayableDiscardPile.getDiscardCard() == null)
-			{
-				JOptionPane.showMessageDialog(
-						null, 
-						"NO MORE CARD "
-								+ "again", "UNO Error", 
-								JOptionPane.ERROR_MESSAGE);
+			// What if there is no more card?
+			else if (displayableDiscardPile.getDiscardCard() == null) {
+				JOptionPane.showMessageDialog(null, "NO MORE CARD " + "again",
+						"UNO Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}//End searching
+		}// End searching
 
 	}
 
@@ -244,11 +241,11 @@ public class UnoGamePanel extends JPanel {
 		while (flags < 1) {
 			selectedValue = (String) JOptionPane.showInputDialog(null,
 
-					"Select a color", "Wild Card!",
+			"Select a color", "Wild Card!",
 
-					JOptionPane.INFORMATION_MESSAGE, null,
+			JOptionPane.INFORMATION_MESSAGE, null,
 
-					possibleValues, possibleValues[0]);
+			possibleValues, possibleValues[0]);
 			if (selectedValue != null) {
 				returnValue = CardColorEnum.valueOf(selectedValue);
 				flags++;
@@ -257,77 +254,98 @@ public class UnoGamePanel extends JPanel {
 			 * We don't want them to cancel the color selection, so if they do,
 			 * we loop back and ask again
 			 */
+
 		}
 		return returnValue;
 	}
 
 	public void drawUserCard() {
 		// TODO check if user turn
-		if(userHand.hasDrawnCardAlready()){
+		if (userHand.hasDrawnCardAlready()) {
 			playUserCard(null);
-		}else{
+		} else {
 			userHand.setHasDrawnCardAlready(true);
 			userHand.addCard(displayableDeck.drawCard());
 		}
 	}
-	
-	public void deckEmpty(){
+
+	public void deckEmpty() {
 		Object[] possibleValues = { "Restart", "Quit" };
 		boolean selectionMade = false;
 
 		while (!selectionMade) {
-			String selectedValue = (String)JOptionPane.showInputDialog(this, 
+			String selectedValue = (String) JOptionPane.showInputDialog(this,
 					"Deck is empty, the winner of the game is: \n"
-					+ findWinner() +"\n", 
-					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
-					null, possibleValues, possibleValues[1]);
-			if(selectedValue != null){
+							+ findWinner() + "\n", "GAME OVER",
+					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
+					possibleValues[1]);
+			if (selectedValue != null) {
 				selectionMade = true;
-				if(selectedValue.equals("Quit")){
+				if (selectedValue.equals("Quit")) {
 					System.exit(0);
-				}else{
-					//TODO restart game
+				} else {
+					// TODO restart game
 				}
 			}
 		}
 	}
-	
-	public void handEmpty(DisplayableHand winner){
+
+	public void handEmpty(DisplayableHand winner) {
 		Object[] possibleValues = { "Restart", "Quit" };
 		boolean selectionMade = false;
 
 		while (!selectionMade) {
-			String selectedValue = (String)JOptionPane.showInputDialog(this, 
-					findWinner() + " has no more cards left, Congratulations", 
-					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
-					null, possibleValues, possibleValues[1]);
-			if(selectedValue != null){
+			String selectedValue = (String) JOptionPane.showInputDialog(this,
+					findWinner() + " has no more cards left, Congratulations",
+					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, null,
+					possibleValues, possibleValues[1]);
+			if (selectedValue != null) {
 				selectionMade = true;
-				if(selectedValue.equals("Quit")){
+				if (selectedValue.equals("Quit")) {
 					System.exit(0);
-				}else{
-					//TODO restart game
+				} else {
+					try {
+						restart();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 	}
 	
-	private String findWinner(){
+	public void restart() throws IOException, InterruptedException {
+	        StringBuilder cmd = new StringBuilder();
+	        cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
+	        for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+	            cmd.append(jvmArg + " ");
+	        }
+	        cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+	        cmd.append(MainFrame.class.getName()).append(" ");
+	        Runtime.getRuntime().exec(cmd.toString());
+	        System.exit(0);
+	}
+
+	private String findWinner() {
 		String winner = null;
 		int maxPoints = Integer.MAX_VALUE;
-		if(userHand.getTotalNumbCard() < maxPoints){
+		if (userHand.getTotalNumbCard() < maxPoints) {
 			winner = userHand.getName();
 			maxPoints = userHand.getTotalNumbCard();
 		}
-		if(computer1.getTotalNumbCard() < maxPoints){
+		if (computer1.getTotalNumbCard() < maxPoints) {
 			winner = computer1.getName();
 			maxPoints = computer1.getTotalNumbCard();
 		}
-		if(computer2.getTotalNumbCard() < maxPoints){
+		if (computer2.getTotalNumbCard() < maxPoints) {
 			winner = computer2.getName();
 			maxPoints = computer2.getTotalNumbCard();
 		}
-		if(computer3.getTotalNumbCard() < maxPoints){
+		if (computer3.getTotalNumbCard() < maxPoints) {
 			winner = computer3.getName();
 			maxPoints = computer3.getTotalNumbCard();
 		}

@@ -32,16 +32,16 @@ public class DisplayableDiscardPile extends JPanel {
 		this.discard = discard;
 		repaint();
 	}
-	
+
 	public DisplayableCard getDiscardCard() {
 		return discard;
 	}
-	
+
 	public void clearDiscardPile(){
 		discard = null;
 		repaint();
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
