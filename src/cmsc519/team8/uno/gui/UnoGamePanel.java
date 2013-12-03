@@ -116,10 +116,10 @@ public class UnoGamePanel extends JPanel {
 		}
 		//Get values of each players.
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
-		
-	
+
+
 	}
-	
+
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -136,18 +136,18 @@ public class UnoGamePanel extends JPanel {
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
 		//Calculate the value of each cards.
-		
+
 		/**
-		
+
 		selectCard.getCard().getCardValue()
 		DisplayableCard currentCardValue = computer1.getCurrentCard(0); 
 
 		currentCardValue.getCard().getPregameValue();
-		
-		
+
+
 		computer1
-		**/
-		
+		 **/
+
 	}
 
 	// returns true if card can be played
@@ -155,6 +155,17 @@ public class UnoGamePanel extends JPanel {
 
 		if (displayableDiscardPile.getDiscardCard() == null) {
 			return false;
+		}
+		
+		if(selectCard == null){
+			userHand.setHasDrawnCardAlready(false);
+			letComputerPlay(computer1);
+			computer1.setHasDrawnCardAlready(false);
+			letComputerPlay(computer2);
+			computer2.setHasDrawnCardAlready(false);
+			letComputerPlay(computer3);
+			computer3.setHasDrawnCardAlready(false);
+			return true; //just lost turn, no error needed to be shown
 		}
 
 		boolean isPlayable = selectCard.getCard().isPlayable(
@@ -167,9 +178,13 @@ public class UnoGamePanel extends JPanel {
 
 			DisplayableCard card = userHand.removeCard();
 			displayableDiscardPile.setDiscardCard(card);
+			userHand.setHasDrawnCardAlready(false);
 			letComputerPlay(computer1);
+			computer1.setHasDrawnCardAlready(false);
 			letComputerPlay(computer2);
+			computer2.setHasDrawnCardAlready(false);
 			letComputerPlay(computer3);
+			computer3.setHasDrawnCardAlready(false);
 			// When computer finishes, user plays again.
 			return isPlayable;
 		}
@@ -178,41 +193,43 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	private void letComputerPlay(DisplayableHand computer) {
-		// TODO Auto-generated method stub
+		
 		if(displayableDiscardPile.getDiscardCard() == null){
 			System.out.print("null");
-	}
-	
-	//Linear Search to find matching card to be discarded.
-	for(int i=0; i< computer.getTotalNumbCard().size() ; i++){
-		
-		DisplayableCard currentCardValue = computer.getCurrentCard(i); 
-		System.out.println("computer card value " + currentCardValue.getCard().toString());
-		
-		boolean isPlayable = currentCardValue.getCard().isPlayable(
-				displayableDiscardPile.getDiscardCard().getCard());
-		
-		if(isPlayable){
-			if(currentCardValue.getCard().getCardValue().equals(CardValueEnum.WILD)){
-				currentCardValue.getCard().setWildColor(wildSelector());
-			}
+		}
+
+		//Linear Search to find matching card to be discarded.
+		for(int i=0; i< computer.getTotalNumbCard().size() ; i++){
+
+			DisplayableCard currentCardValue = computer.getCurrentCard(i); 
+			System.out.println("computer card value " + currentCardValue.getCard().toString());
+
+			boolean isPlayable = currentCardValue.getCard().isPlayable(
+					displayableDiscardPile.getDiscardCard().getCard());
+
+			if(isPlayable){
+				if(currentCardValue.getCard().getCardValue().equals(CardValueEnum.WILD)){
+					computer.setWildCardValue(currentCardValue);
+				}
 				computer.removeComputerCard(currentCardValue);
 				DisplayableCard card = computer.removeCard();
 				displayableDiscardPile.setDiscardCard(card);
-		}else if (i== computer.getTotalNumbCard().size()-1 && !isPlayable)
-		{
-			//Gets a card and check for the condition AGAIN!!
-			computer.addCard(displayableDeck.drawCard());
-			letComputerPlay(computer);			
-		}
-		//What if there is no more card?
-		else if(displayableDiscardPile.getDiscardCard() == null)
-		{
-			JOptionPane.showMessageDialog(
-    	    		   null, 
-    	    		   "NO MORE CARD "
-    	    		   + "again", "UNO Error", 
-    	    		   JOptionPane.ERROR_MESSAGE);
+				break;
+			}else if (i== computer.getTotalNumbCard().size()-1 && !isPlayable && 
+					!computer.hasDrawnCardAlready())
+			{
+				//Gets a card and check for the condition AGAIN!!
+				computer.addCard(displayableDeck.drawCard());
+				computer.setHasDrawnCardAlready(true);			
+			}
+			//What if there is no more card?
+			else if(displayableDiscardPile.getDiscardCard() == null)
+			{
+				JOptionPane.showMessageDialog(
+						null, 
+						"NO MORE CARD "
+								+ "again", "UNO Error", 
+								JOptionPane.ERROR_MESSAGE);
 			}
 		}//End searching
 
@@ -227,11 +244,11 @@ public class UnoGamePanel extends JPanel {
 		while (flags < 1) {
 			selectedValue = (String) JOptionPane.showInputDialog(null,
 
-			"Select a color", "Wild Card!",
+					"Select a color", "Wild Card!",
 
-			JOptionPane.INFORMATION_MESSAGE, null,
+					JOptionPane.INFORMATION_MESSAGE, null,
 
-			possibleValues, possibleValues[0]);
+					possibleValues, possibleValues[0]);
 			if (selectedValue != null) {
 				returnValue = CardColorEnum.valueOf(selectedValue);
 				flags++;
@@ -246,7 +263,11 @@ public class UnoGamePanel extends JPanel {
 
 	public void drawUserCard() {
 		// TODO check if user turn
-
-		userHand.addCard(displayableDeck.drawCard());
+		if(userHand.hasDrawnCardAlready()){
+			playUserCard(null);
+		}else{
+			userHand.setHasDrawnCardAlready(true);
+			userHand.addCard(displayableDeck.drawCard());
+		}
 	}
 }
