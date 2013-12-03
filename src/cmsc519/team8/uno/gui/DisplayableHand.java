@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import cmsc519.team8.uno.data.CardColorEnum;
 import cmsc519.team8.uno.data.Hand;
 
 public class DisplayableHand extends JPanel {
@@ -34,6 +35,16 @@ public class DisplayableHand extends JPanel {
 	private DisplayableCard cardSelected;
 	private Hand hand;
 	private JLabel label;
+	private boolean hasDrawnCardAlready = false;
+	private String name;
+
+	public boolean hasDrawnCardAlready() {
+		return hasDrawnCardAlready;
+	}
+
+	public void setHasDrawnCardAlready(boolean hasDrawnCardAlready) {
+		this.hasDrawnCardAlready = hasDrawnCardAlready;
+	}
 
 	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted, 
 			boolean switchX){
@@ -59,15 +70,22 @@ public class DisplayableHand extends JPanel {
 	
 	public void setLabel(JLabel label){
 		this.label = label;
+		this.name = label.getText();
+	}
+	
+	public String getName(){
+		return name;
 	}
 
-	public DisplayableCard removeCard() {
+	public DisplayableCard removeCard(boolean inPreGame) {
 		hand.removeCard(cardSelected.getCard());
 		cards.remove(cardSelected);
 		repaint();
 		if(cards.size() == 1 && label != null){
 			label.setText(label.getText().concat(" *UNO*"));
 			System.out.println(label.getFont().toString());
+		}else if(cards.size() == 0 && !inPreGame){
+			((UnoGamePanel)getParent()).handEmpty(this);
 		}
 		return cardSelected;
 	}
@@ -229,8 +247,13 @@ public class DisplayableHand extends JPanel {
 		repaint();
 	}
 
+<<<<<<< HEAD
 	public ArrayList<DisplayableCard> getTotalNumbCard() {
 		return cards;
+=======
+	public int getTotalNumbCard() {
+		return cards.size();
+>>>>>>> upstream/master
 	}
 	
 	public String toString(int i){
@@ -241,4 +264,45 @@ public class DisplayableHand extends JPanel {
 		// TODO Auto-generated method stub
 		return cards.get(i);
 	}
+<<<<<<< HEAD
+=======
+	
+	public void setWildCardValue(DisplayableCard card){
+		int blue = 0;
+		int yellow = 0;
+		int red = 0;
+		int green = 0;
+		
+		for(DisplayableCard c : cards){
+			switch(c.getCard().getCardColor()){
+			case BLUE:
+				blue++;
+				break;
+			case YELLOW:
+				yellow++;
+				break;
+			case RED:
+				red++;
+				break;
+			case GREEN:
+				green++;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if(blue > yellow && blue > red && blue > green){
+			card.getCard().setWildColor(CardColorEnum.BLUE);
+		}else if(yellow > blue && yellow > red && yellow > green){
+			card.getCard().setWildColor(CardColorEnum.YELLOW);
+		}else if(red > yellow && red > blue && red > green){
+			card.getCard().setWildColor(CardColorEnum.RED);
+		}else if(green > yellow && green > red && green > blue){
+			card.getCard().setWildColor(CardColorEnum.GREEN);
+		}else{
+			card.getCard().setWildColor(CardColorEnum.BLUE);
+		}
+	}
+>>>>>>> upstream/master
 }

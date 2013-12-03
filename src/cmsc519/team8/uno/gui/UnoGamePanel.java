@@ -116,10 +116,17 @@ public class UnoGamePanel extends JPanel {
 		}
 		//Get values of each players.
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+<<<<<<< HEAD
 		
 	
 	}
 	
+=======
+
+
+	}
+
+>>>>>>> upstream/master
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -136,18 +143,32 @@ public class UnoGamePanel extends JPanel {
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
 		//Calculate the value of each cards.
+<<<<<<< HEAD
 		
 		/**
 		
+=======
+
+		/**
+
+>>>>>>> upstream/master
 		selectCard.getCard().getCardValue()
 		DisplayableCard currentCardValue = computer1.getCurrentCard(0); 
 
 		currentCardValue.getCard().getPregameValue();
+<<<<<<< HEAD
 		
 		
 		computer1
 		**/
 		
+=======
+
+
+		computer1
+		 **/
+
+>>>>>>> upstream/master
 	}
 
 	// returns true if card can be played
@@ -156,6 +177,20 @@ public class UnoGamePanel extends JPanel {
 		if (displayableDiscardPile.getDiscardCard() == null) {
 			return false;
 		}
+<<<<<<< HEAD
+=======
+		
+		if(selectCard == null){
+			userHand.setHasDrawnCardAlready(false);
+			letComputerPlay(computer1);
+			computer1.setHasDrawnCardAlready(false);
+			letComputerPlay(computer2);
+			computer2.setHasDrawnCardAlready(false);
+			letComputerPlay(computer3);
+			computer3.setHasDrawnCardAlready(false);
+			return true; //just lost turn, no error needed to be shown
+		}
+>>>>>>> upstream/master
 
 		boolean isPlayable = selectCard.getCard().isPlayable(
 				displayableDiscardPile.getDiscardCard().getCard());
@@ -165,11 +200,23 @@ public class UnoGamePanel extends JPanel {
 				selectCard.getCard().setWildColor(wildSelector());
 			}
 
+<<<<<<< HEAD
 			DisplayableCard card = userHand.removeCard();
 			displayableDiscardPile.setDiscardCard(card);
 			letComputerPlay(computer1);
 			letComputerPlay(computer2);
 			letComputerPlay(computer3);
+=======
+			DisplayableCard card = userHand.removeCard(false);
+			displayableDiscardPile.setDiscardCard(card);
+			userHand.setHasDrawnCardAlready(false);
+			letComputerPlay(computer1);
+			computer1.setHasDrawnCardAlready(false);
+			letComputerPlay(computer2);
+			computer2.setHasDrawnCardAlready(false);
+			letComputerPlay(computer3);
+			computer3.setHasDrawnCardAlready(false);
+>>>>>>> upstream/master
 			// When computer finishes, user plays again.
 			return isPlayable;
 		}
@@ -178,6 +225,7 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	private void letComputerPlay(DisplayableHand computer) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
 		if(displayableDiscardPile.getDiscardCard() == null){
 			System.out.print("null");
@@ -213,6 +261,45 @@ public class UnoGamePanel extends JPanel {
     	    		   "NO MORE CARD "
     	    		   + "again", "UNO Error", 
     	    		   JOptionPane.ERROR_MESSAGE);
+=======
+		
+		if(displayableDiscardPile.getDiscardCard() == null){
+			System.out.print("null");
+		}
+
+		//Linear Search to find matching card to be discarded.
+		for(int i=0; i< computer.getTotalNumbCard() ; i++){
+
+			DisplayableCard currentCardValue = computer.getCurrentCard(i); 
+			System.out.println("computer card value " + currentCardValue.getCard().toString());
+
+			boolean isPlayable = currentCardValue.getCard().isPlayable(
+					displayableDiscardPile.getDiscardCard().getCard());
+
+			if(isPlayable){
+				if(currentCardValue.getCard().getCardValue().equals(CardValueEnum.WILD)){
+					computer.setWildCardValue(currentCardValue);
+				}
+				computer.removeComputerCard(currentCardValue);
+				DisplayableCard card = computer.removeCard(false);
+				displayableDiscardPile.setDiscardCard(card);
+				break;
+			}else if (i== computer.getTotalNumbCard()-1 && !isPlayable && 
+					!computer.hasDrawnCardAlready())
+			{
+				//Gets a card and check for the condition AGAIN!!
+				computer.addCard(displayableDeck.drawCard());
+				computer.setHasDrawnCardAlready(true);			
+			}
+			//What if there is no more card?
+			else if(displayableDiscardPile.getDiscardCard() == null)
+			{
+				JOptionPane.showMessageDialog(
+						null, 
+						"NO MORE CARD "
+								+ "again", "UNO Error", 
+								JOptionPane.ERROR_MESSAGE);
+>>>>>>> upstream/master
 			}
 		}//End searching
 
@@ -226,12 +313,21 @@ public class UnoGamePanel extends JPanel {
 
 		while (flags < 1) {
 			selectedValue = (String) JOptionPane.showInputDialog(null,
+<<<<<<< HEAD
 
 			"Select a color", "Wild Card!",
 
 			JOptionPane.INFORMATION_MESSAGE, null,
 
 			possibleValues, possibleValues[0]);
+=======
+
+					"Select a color", "Wild Card!",
+
+					JOptionPane.INFORMATION_MESSAGE, null,
+
+					possibleValues, possibleValues[0]);
+>>>>>>> upstream/master
 			if (selectedValue != null) {
 				returnValue = CardColorEnum.valueOf(selectedValue);
 				flags++;
@@ -240,13 +336,92 @@ public class UnoGamePanel extends JPanel {
 			 * We don't want them to cancel the color selection, so if they do,
 			 * we loop back and ask again
 			 */
+<<<<<<< HEAD
+		}
+		return returnValue;
+=======
 		}
 		return returnValue;
 	}
 
 	public void drawUserCard() {
 		// TODO check if user turn
+		if(userHand.hasDrawnCardAlready()){
+			playUserCard(null);
+		}else{
+			userHand.setHasDrawnCardAlready(true);
+			userHand.addCard(displayableDeck.drawCard());
+		}
+	}
+	
+	public void deckEmpty(){
+		Object[] possibleValues = { "Restart", "Quit" };
+		boolean selectionMade = false;
+
+		while (!selectionMade) {
+			String selectedValue = (String)JOptionPane.showInputDialog(this, 
+					"Deck is empty, the winner of the game is: \n"
+					+ findWinner() +"\n", 
+					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
+					null, possibleValues, possibleValues[1]);
+			if(selectedValue != null){
+				selectionMade = true;
+				if(selectedValue.equals("Quit")){
+					System.exit(0);
+				}else{
+					//TODO restart game
+				}
+			}
+		}
+>>>>>>> upstream/master
+	}
+	
+	public void handEmpty(DisplayableHand winner){
+		Object[] possibleValues = { "Restart", "Quit" };
+		boolean selectionMade = false;
+
+<<<<<<< HEAD
+	public void drawUserCard() {
+		// TODO check if user turn
 
 		userHand.addCard(displayableDeck.drawCard());
+=======
+		while (!selectionMade) {
+			String selectedValue = (String)JOptionPane.showInputDialog(this, 
+					findWinner() + " has no more cards left, Congratulations", 
+					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, 
+					null, possibleValues, possibleValues[1]);
+			if(selectedValue != null){
+				selectionMade = true;
+				if(selectedValue.equals("Quit")){
+					System.exit(0);
+				}else{
+					//TODO restart game
+				}
+			}
+		}
+	}
+	
+	private String findWinner(){
+		String winner = null;
+		int maxPoints = Integer.MAX_VALUE;
+		if(userHand.getTotalNumbCard() < maxPoints){
+			winner = userHand.getName();
+			maxPoints = userHand.getTotalNumbCard();
+		}
+		if(computer1.getTotalNumbCard() < maxPoints){
+			winner = computer1.getName();
+			maxPoints = computer1.getTotalNumbCard();
+		}
+		if(computer2.getTotalNumbCard() < maxPoints){
+			winner = computer2.getName();
+			maxPoints = computer2.getTotalNumbCard();
+		}
+		if(computer3.getTotalNumbCard() < maxPoints){
+			winner = computer3.getName();
+			maxPoints = computer3.getTotalNumbCard();
+		}
+		return winner;
+>>>>>>> upstream/master
 	}
 }
