@@ -35,6 +35,7 @@ public class DisplayableHand extends JPanel {
 	private Hand hand;
 	private JLabel label;
 	private boolean hasDrawnCardAlready = false;
+	private String name;
 
 	public boolean hasDrawnCardAlready() {
 		return hasDrawnCardAlready;
@@ -68,6 +69,11 @@ public class DisplayableHand extends JPanel {
 	
 	public void setLabel(JLabel label){
 		this.label = label;
+		this.name = label.getText();
+	}
+	
+	public String getName(){
+		return name;
 	}
 
 	public DisplayableCard removeCard() {
@@ -77,6 +83,8 @@ public class DisplayableHand extends JPanel {
 		if(cards.size() == 1 && label != null){
 			label.setText(label.getText().concat(" *UNO*"));
 			System.out.println(label.getFont().toString());
+		}else if(cards.size() == 0){
+			((UnoGamePanel)getParent()).handEmpty(this);
 		}
 		return cardSelected;
 	}
@@ -238,8 +246,8 @@ public class DisplayableHand extends JPanel {
 		repaint();
 	}
 
-	public ArrayList<DisplayableCard> getTotalNumbCard() {
-		return cards;
+	public int getTotalNumbCard() {
+		return cards.size();
 	}
 	
 	public String toString(int i){

@@ -80,4 +80,8 @@ public class Deck {
 			System.out.println(cards.get(i).toString());
 		}
 	}
+	
+	public int getSize(){
+		return cards.size();
+	}
 }
