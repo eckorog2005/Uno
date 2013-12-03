@@ -45,7 +45,7 @@ public class UnoGamePanel extends JPanel {
 	public UnoGamePanel() {
 		this.setLayout(null);
 
-		// add labels
+		// add labelsssss
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(70, 20);
 		lblUser.setLocation(388, 360);
