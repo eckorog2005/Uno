@@ -295,60 +295,50 @@ public class UnoGamePanel extends JPanel {
 
 	public void deckEmpty() {
 		Object[] possibleValues = { "Restart", "Quit" };
-		boolean selectionMade = false;
 
-		while (!selectionMade) {
-			String selectedValue = (String) JOptionPane.showInputDialog(this,
-					"Deck is empty, the winner of the game is: "
-							+ "\n<HTML><font size=12>" + findWinner()
-							+ "</font></HTML>\n", "GAME OVER",
-					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
-					possibleValues[1]);
-			if (selectedValue != null) {
-				selectionMade = true;
-				if (selectedValue.equals("Quit")) {
-					System.exit(0);
-				} else {
-					try {
-						restart();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+		int selectedValue = JOptionPane.showOptionDialog(this,
+				"Deck is empty, the winner of the game is: "
+						+ "\n<HTML><font size=12>"+ findWinner() + 
+						"</font></HTML>\n", "GAME OVER",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
+						possibleValues[1]);
+		if (selectedValue == 1) {
+			System.exit(0);
+		} else {
+			try {
+				restart();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
 
 	public void handEmpty(DisplayableHand winner) {
-		Object[] possibleValues = { "New Game", "Quit" };
-		boolean selectionMade = false;
+		Object[] possibleValues = { "Restart", "Quit" };
 
-		while (!selectionMade) {
-			String selectedValue = (String) JOptionPane.showInputDialog(this,
-					"Congratulations on winning UNO : \n"
-							+ "<HTML><font size=12>" + findWinner()
-							+ "</font></HTML>\n", "GAME OVER",
-					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
-					possibleValues[1]);
-			if (selectedValue != null) {
-				selectionMade = true;
-				if (selectedValue.equals("Quit")) {
-					System.exit(0);
-				} else {
-					try {
-						restart();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+		int selectedValue = JOptionPane.showOptionDialog(this,
+				"Congratulations on winning UNO : \n" +
+						"<HTML><font size=12>"+ findWinner() + 
+						"</font></HTML>\n", "GAME OVER",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
+						possibleValues[1]);
+		if (selectedValue == 1) {
+			System.exit(0);
+		} else {
+			try {
+				restart();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
