@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -92,6 +93,30 @@ public class UnoGamePanel extends JPanel {
 		cpu3Status.setLocation(554, 270);
 		cpu3Status.setVisible(true);
 		add(cpu3Status);
+		
+		// Pre game: Determines dealer and player turn.
+		String dealer = preGame(userHand, computer1, computer2, computer3);
+
+		// Determines the dealer
+		if (dealer.equals("user")) {
+			lblUser.setText("DEALER");
+			JOptionPane.showMessageDialog(null, "You are the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer1")) {
+			lblCpu1.setText("DEALER");
+			JOptionPane.showMessageDialog(null,
+					"Computer 1 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer2")) {
+			lblCpu2.setText("DEALER");
+			JOptionPane.showMessageDialog(null,
+					"Computer 2 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer3")) {
+			lblCpu3.setText("DEALER");
+			JOptionPane.showMessageDialog(null, "Computer 3 is a dealer" + "",
+					"", JOptionPane.PLAIN_MESSAGE);
+		}
 
 		// add hands
 		userHand.setSize(500, 160);
@@ -127,24 +152,111 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 
-		// testing purposes
 		shuffle();
-		// preGame();
-		deal();
+		// The game should be played in a proper term based on dealer.
+		deal(dealer);
+
 	}
 
-	private void preGame() {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < 1; i++) {
-			userHand.addCard(displayableDeck.drawCard());
-			computer1.addCard(displayableDeck.drawCard());
-			computer2.addCard(displayableDeck.drawCard());
-			computer3.addCard(displayableDeck.drawCard());
+	private String preGame(DisplayableHand userHand, DisplayableHand computer1,
+			DisplayableHand computer2, DisplayableHand computer3) {
+
+		// Get one cards each. just one.
+		shuffle();
+		userHand.addCard(displayableDeck.drawCard());
+		computer1.addCard(displayableDeck.drawCard());
+		computer2.addCard(displayableDeck.drawCard());
+		computer3.addCard(displayableDeck.drawCard());
+
+		// get values of each card. (in a integer form so it can be compared).
+		int userVal = getIntCardVal(userHand);
+		int comp1Val = getIntCardVal(computer1);
+		int comp2Val = getIntCardVal(computer2);
+		int comp3Val = getIntCardVal(computer3);
+
+		// Testing to see what Values each players has.
+		System.out.println(userVal + "" + comp1Val);
+		int[] data = new int[4];
+		data[0] = userVal;
+		data[1] = comp1Val;
+		data[2] = comp2Val;
+		data[3] = comp3Val;
+
+		Arrays.sort(data);
+
+		// Therefore, it is possible to find dealer and find the right "turn"
+		if (data[3] == userVal) {
+
+			userHand.clearHand();
+			computer1.clearHand();
+			computer2.clearHand();
+			computer3.clearHand();
+			return "user"; // 0 Turn Implies : Com1 -> Com2 -> Com3 -> User.
+		} else if (data[3] == comp1Val) {
+
+			userHand.clearHand();
+			computer1.clearHand();
+			computer2.clearHand();
+			computer3.clearHand();
+
+			return "computer1"; // 1 implies: Com2 -> Com3 -> User -> Comp1.
+		} else if (data[3] == comp2Val) {
+			userHand.clearHand();
+			computer1.clearHand();
+			computer2.clearHand();
+			computer3.clearHand();
+			return "computer2";
+			// Turn 2 : computer 3 -> user -> comp1 -> comp2 and loop.
+		} else if (data[3] == comp3Val) {
+			userHand.clearHand();
+			computer1.clearHand();
+			computer2.clearHand();
+			computer3.clearHand();
+			return "computer3";
+			// Turn : user -> computer1 - > computer 2-> computer 3 and iterate.
+		} else
+			userHand.clearHand();
+		computer1.clearHand();
+		computer2.clearHand();
+		computer3.clearHand();
+		return "";
+	}
+	
+	private int getIntCardVal(DisplayableHand player) {
+		// It will return integer value of the cards.
+		DisplayableCard userHandValue = player.getCurrentCard(0);
+
+		if (userHandValue.getCard().getCardValue().toString() == "ZERO") {
+			return 0;
+		} else if (userHandValue.getCard().getCardValue().toString() == "ONE") {
+			return 1;
+		} else if (userHandValue.getCard().getCardValue().toString() == "TWO") {
+			return 2;
 		}
-		// Get values of each players.
-		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
-
+		if (userHandValue.getCard().getCardValue().toString() == "THREE") {
+			return 3;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "FOUR") {
+			return 4;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "FIVE") {
+			return 5;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "SIX") {
+			return 6;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "SEVEN") {
+			return 7;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "EIGHT") {
+			return 8;
+		}
+		if (userHandValue.getCard().getCardValue().toString() == "NINE") {
+			return 9;
+		} else
+			return 0; // Wild card is 0.
 	}
+
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -152,7 +264,7 @@ public class UnoGamePanel extends JPanel {
 		displayableDeck.setDeck(deck);
 	}
 
-	public void deal() {
+	public void deal(String dealer) {
 		for (int i = 0; i < HAND_SIZE; i++) {
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());
@@ -160,17 +272,21 @@ public class UnoGamePanel extends JPanel {
 			computer3.addCard(displayableDeck.drawCard());
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
-		// Calculate the value of each cards.
-
-		/**
-		 * selectCard.getCard().getCardValue() DisplayableCard currentCardValue
-		 * = computer1.getCurrentCard(0);
-		 * 
-		 * currentCardValue.getCard().getPregameValue();
-		 * 
-		 * 
-		 * computer1
-		 **/
+		if (dealer.equals("user")) {
+			System.out.println("computer 1 plays first");
+			letComputerPlay(computer1);
+			letComputerPlay(computer2);
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer1")) {
+			System.out.println("computer 2 plays first");
+			letComputerPlay(computer2);
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer2")) {
+			System.out.println("computer 3 plays first");
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer3")) {
+			System.out.println("user plays first");
+		}
 
 	}
 

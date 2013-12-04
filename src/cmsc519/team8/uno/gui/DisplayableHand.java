@@ -1,5 +1,6 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -298,4 +299,8 @@ public class DisplayableHand extends JPanel {
 		}
 	}
 
+	public void clearHand() {
+		hand = new Hand();
+		cards.remove(0);
+	}
 }
