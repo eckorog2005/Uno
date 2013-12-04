@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Hand {
 
-	public Hand(){
+	public Hand() {
 		cards = new ArrayList<Card>();
 	}
-	
+
 	private ArrayList<Card> cards;
 	private Card selectedCard;
-	
+
 	public Card getSelectedCard() {
 		return selectedCard;
 	}
@@ -19,14 +19,14 @@ public class Hand {
 		this.selectedCard = selectedCard;
 	}
 
-	public void addCard(Card card){
+	public void addCard(Card card) {
 		cards.add(card);
 	}
-	
-	public void removeCard(Card card){
+
+	public void removeCard(Card card) {
 		cards.remove(card);
 	}
-	
+
 	/**
 	 * returns true and changes selected card if a card in hand can be played,
 	 * else false and selected card is null if no cards can be played.
@@ -34,9 +34,9 @@ public class Hand {
 	 * @param playableCard
 	 * @return
 	 */
-	public boolean findBestCard(Card playableCard){
-		for(Card card : cards){
-			if(card.isPlayable(playableCard)){
+	public boolean findBestCard(Card playableCard) {
+		for (Card card : cards) {
+			if (card.isPlayable(playableCard)) {
 				selectedCard = card;
 				return true;
 			}
@@ -48,10 +48,11 @@ public class Hand {
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
-	
-	public void printHand(){
-		for(int i = 0; i<cards.size(); i++){
+
+	public void printHand() {
+		for (int i = 0; i < cards.size(); i++) {
 			System.out.println(cards.get(i).toString());
 		}
 	}
+
 }

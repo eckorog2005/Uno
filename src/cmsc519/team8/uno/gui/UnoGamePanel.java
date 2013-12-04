@@ -48,50 +48,74 @@ public class UnoGamePanel extends JPanel {
 	public UnoGamePanel() {
 		this.setLayout(null);
 
-		// add labels
+		// add labels and status
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(70, 20);
-		lblUser.setLocation(388, 360);
+		lblUser.setLocation(388, 340);
 		lblUser.setVisible(true);
 		add(lblUser);
+		JLabel userStatus = new JLabel("");
+		userStatus.setSize(70, 20);
+		userStatus.setLocation(381, 360);
+		userStatus.setVisible(true);
+		add(userStatus);
 
 		JLabel lblCpu1 = new JLabel("Computer1");
 		lblCpu1.setSize(110, 20);
 		lblCpu1.setLocation(150, 250);
 		lblCpu1.setVisible(true);
 		add(lblCpu1);
+		JLabel cpu1Status = new JLabel("");
+		cpu1Status.setSize(110, 20);
+		cpu1Status.setLocation(164, 270);
+		cpu1Status.setVisible(true);
+		add(cpu1Status);
 
 		JLabel lblCpu2 = new JLabel("Computer2");
 		lblCpu2.setSize(110, 20);
 		lblCpu2.setLocation(365, 150);
 		lblCpu2.setVisible(true);
 		add(lblCpu2);
+		JLabel cpu2Status = new JLabel("");
+		cpu2Status.setSize(110, 20);
+		cpu2Status.setLocation(379, 170);
+		cpu2Status.setVisible(true);
+		add(cpu2Status);
 
 		JLabel lblCpu3 = new JLabel("Computer3");
 		lblCpu3.setSize(110, 20);
 		lblCpu3.setLocation(540, 250);
 		lblCpu3.setVisible(true);
 		add(lblCpu3);
+		JLabel cpu3Status = new JLabel("");
+		cpu3Status.setSize(110, 20);
+		cpu3Status.setLocation(554, 270);
+		cpu3Status.setVisible(true);
+		add(cpu3Status);
 
 		// add hands
 		userHand.setSize(500, 160);
 		userHand.setLocation(150, 380);
 		userHand.setLabel(lblUser);
+		userHand.setStatus(userStatus);
 		add(userHand);
 
 		computer1.setSize(140, 500);
 		computer1.setLocation(0, 25);
 		computer1.setLabel(lblCpu1);
+		computer1.setStatus(cpu1Status);
 		add(computer1);
 
 		computer2.setSize(500, 140);
 		computer2.setLocation(150, 0);
 		computer2.setLabel(lblCpu2);
+		computer2.setStatus(cpu2Status);
 		add(computer2);
 
 		computer3.setSize(140, 500);
 		computer3.setLocation(650, 25);
 		computer3.setLabel(lblCpu3);
+		computer3.setStatus(cpu3Status);
 		add(computer3);
 
 		// add discard and deck
@@ -276,8 +300,8 @@ public class UnoGamePanel extends JPanel {
 		while (!selectionMade) {
 			String selectedValue = (String) JOptionPane.showInputDialog(this,
 					"Deck is empty, the winner of the game is: "
-					+ "\n<HTML><font size=12>"+ findWinner() + 
-					"</font></HTML>\n", "GAME OVER",
+							+ "\n<HTML><font size=12>" + findWinner()
+							+ "</font></HTML>\n", "GAME OVER",
 					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
 					possibleValues[1]);
 			if (selectedValue != null) {
@@ -300,16 +324,16 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	public void handEmpty(DisplayableHand winner) {
-		Object[] possibleValues = { "Restart", "Quit" };
+		Object[] possibleValues = { "New Game", "Quit" };
 		boolean selectionMade = false;
 
 		while (!selectionMade) {
 			String selectedValue = (String) JOptionPane.showInputDialog(this,
-					"Congratulations on winning UNO : \n" +
-					"<HTML><font size=12>"+ findWinner() + 
-					"</font></HTML>\n",
-					"GAME OVER", JOptionPane.INFORMATION_MESSAGE, null,
-					possibleValues, possibleValues[1]);
+					"Congratulations on winning UNO : \n"
+							+ "<HTML><font size=12>" + findWinner()
+							+ "</font></HTML>\n", "GAME OVER",
+					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
+					possibleValues[1]);
 			if (selectedValue != null) {
 				selectionMade = true;
 				if (selectedValue.equals("Quit")) {
@@ -328,17 +352,21 @@ public class UnoGamePanel extends JPanel {
 			}
 		}
 	}
-	
+
 	public void restart() throws IOException, InterruptedException {
-	        StringBuilder cmd = new StringBuilder();
-	        cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
-	        for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
-	            cmd.append(jvmArg + " ");
-	        }
-	        cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
-	        cmd.append(MainFrame.class.getName()).append(" ");
-	        Runtime.getRuntime().exec(cmd.toString());
-	        System.exit(0);
+		StringBuilder cmd = new StringBuilder();
+		cmd.append(System.getProperty("java.home") + File.separator + "bin"
+				+ File.separator + "java ");
+		for (String jvmArg : ManagementFactory.getRuntimeMXBean()
+				.getInputArguments()) {
+			cmd.append(jvmArg + " ");
+		}
+		cmd.append("-cp ")
+				.append(ManagementFactory.getRuntimeMXBean().getClassPath())
+				.append(" ");
+		cmd.append(MainFrame.class.getName()).append(" ");
+		Runtime.getRuntime().exec(cmd.toString());
+		System.exit(0);
 	}
 
 	private String findWinner() {
@@ -362,4 +390,5 @@ public class UnoGamePanel extends JPanel {
 		}
 		return winner;
 	}
+
 }
