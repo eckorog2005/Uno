@@ -62,12 +62,14 @@ public class UnoGamePanel extends JPanel {
 					JOptionPane.PLAIN_MESSAGE);
 		} else if (dealer.equals("computer1")) {
 			lblCpu1.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 1 is the dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Computer 1 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
 		} else if (dealer.equals("computer2")) {
 			lblCpu2.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 2 is the dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Computer 2 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
 		} else if (dealer.equals("computer3")) {
 			lblCpu3.setText("DEALER");
 			JOptionPane.showMessageDialog(null, "Computer 3 is a dealer" + "",
@@ -125,33 +127,12 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 
-		// The game should be played in a proper term based on dealer.
-		
 		shuffle();
-		
-		if (dealer.equals("user")) {
-			
-			
-			lblUser.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "You are the dealer" + "", "",
-					JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer1")) {
-			lblCpu1.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 1 is the dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer2")) {
-			lblCpu2.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 2 is the dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer3")) {
-			lblCpu3.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 3 is a dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
-		}
-		
-		deal();
-		
+		// The game should be played in a proper term based on dealer.
+		deal(dealer);
+
 	}
+
 	private String preGame(DisplayableHand userHand, DisplayableHand computer1,
 			DisplayableHand computer2, DisplayableHand computer3) {
 
@@ -257,7 +238,7 @@ public class UnoGamePanel extends JPanel {
 		displayableDeck.setDeck(deck);
 	}
 
-	public void deal() {
+	public void deal(String dealer) {
 		for (int i = 0; i < HAND_SIZE; i++) {
 			userHand.addCard(displayableDeck.drawCard());
 			computer1.addCard(displayableDeck.drawCard());
@@ -265,6 +246,22 @@ public class UnoGamePanel extends JPanel {
 			computer3.addCard(displayableDeck.drawCard());
 		}
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+		if (dealer.equals("user")) {
+			System.out.println("computer 1 plays first");
+			letComputerPlay(computer1);
+			letComputerPlay(computer2);
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer1")) {
+			System.out.println("computer 2 plays first");
+			letComputerPlay(computer2);
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer2")) {
+			System.out.println("computer 3 plays first");
+			letComputerPlay(computer3);
+		} else if (dealer.equals("computer3")) {
+			System.out.println("user plays first");
+		}
+
 	}
 
 	// returns true if card can be played
@@ -291,7 +288,7 @@ public class UnoGamePanel extends JPanel {
 		}
 
 		return isPlayable;
-		
+
 	}
 
 	private void letComputerPlay(DisplayableHand computer) {
