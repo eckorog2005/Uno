@@ -241,4 +241,15 @@ public class DisplayableHand extends JPanel {
 		// TODO Auto-generated method stub
 		return cards.get(i);
 	}
+
+	public void clearHand() {
+		hand = new Hand();
+		cards.remove(0);
+	}
+
+	
+
+
+
+	
 }
