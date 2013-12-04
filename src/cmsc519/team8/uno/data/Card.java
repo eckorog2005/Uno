@@ -4,35 +4,35 @@ package cmsc519.team8.uno.data;
  * Represents a single UNO card
  * 
  * @author Team8
- *
+ * 
  */
 public class Card {
 
-	public Card(){
+	public Card() {
 		this.cardValue = CardValueEnum.WILD;
 		this.cardColor = CardColorEnum.BLACK;
 		this.wildColor = CardColorEnum.BLACK;
 	}
-	
-	public Card(CardValueEnum value, CardColorEnum color){
+
+	public Card(CardValueEnum value, CardColorEnum color) {
 		this.cardValue = value;
 		this.cardColor = color;
 		this.wildColor = CardColorEnum.BLACK;
 	}
-	
+
 	private CardValueEnum cardValue;
 	private CardColorEnum cardColor;
 	private CardColorEnum wildColor;
-	
+
 	public CardValueEnum getCardValue() {
 		return cardValue;
 	}
-	
-	public CardColorEnum getWildColor(){
+
+	public CardColorEnum getWildColor() {
 		return wildColor;
 	}
-	
-	public void setWildColor(CardColorEnum wildColor){
+
+	public void setWildColor(CardColorEnum wildColor) {
 		this.wildColor = wildColor;
 	}
 
@@ -47,48 +47,48 @@ public class Card {
 	public void setCardColor(CardColorEnum cardColor) {
 		this.cardColor = cardColor;
 	}
-	
+
 	/**
 	 * checks to see if this called can be played on top of other card
-	 * @param otherCard - discarded card
+	 * 
+	 * @param otherCard
+	 *            - discarded card
 	 * @return
 	 */
-	public boolean isPlayable(Card otherCard){
-		if(this.cardValue.equals(CardValueEnum.WILD)){
+	public boolean isPlayable(Card otherCard) {
+		if (this.cardValue.equals(CardValueEnum.WILD)) {
 			return true;
-		}else if(this.cardValue.equals(otherCard.cardValue)){
+		} else if (this.cardValue.equals(otherCard.cardValue)) {
 			return true;
-		}else if(this.cardColor.equals(otherCard.cardColor)){
+		} else if (this.cardColor.equals(otherCard.cardColor)) {
 			return true;
-		}else if(this.cardColor.equals(otherCard.wildColor)){
+		} else if (this.cardColor.equals(otherCard.wildColor)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return this.cardColor + " " + this.cardValue;
 	}
-	
-	public String getCardImg(){
-		return "UNO" + this.cardColor + " " +this.cardValue;
+
+	public String getCardImg() {
+		return "UNO" + this.cardColor + " " + this.cardValue;
 	}
 
-	//Gets a value of the each card 
+	// Gets a value of the each card
 	/**
 	public int getPregameValue(Card pregameCard) {
 		// TODO Auto-generated method stub
-		if(pregameCard.cardValue.equals("ZERO")){
+		if (pregameCard.cardValue.equals("ZERO")) {
 			return 0;
-		}
-		else if(pregameCard.cardValue.equals("ONE"))
-		{
+		} else if (pregameCard.cardValue.equals("ONE")) {
 			return 1;
 		}
-	return 99;
+		return 99;
 	}
 	**/
-}
 
+}

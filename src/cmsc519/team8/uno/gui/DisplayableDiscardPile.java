@@ -13,8 +13,7 @@ public class DisplayableDiscardPile extends JPanel {
 	 */
 	private static final long serialVersionUID = -6588966950766522126L;
 
-
-	DisplayableDiscardPile(DisplayableCard discard){
+	DisplayableDiscardPile(DisplayableCard discard) {
 		this.setDiscardCard(discard);
 	}
 
@@ -27,7 +26,6 @@ public class DisplayableDiscardPile extends JPanel {
 	private DisplayableCard discard;
 	private Image noCards;
 
-
 	public void setDiscardCard(DisplayableCard discard) {
 		this.discard = discard;
 		repaint();
@@ -37,19 +35,20 @@ public class DisplayableDiscardPile extends JPanel {
 		return discard;
 	}
 
-	public void clearDiscardPile(){
+	public void clearDiscardPile() {
 		discard = null;
 		repaint();
 	}
 
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		if(discard != null){
+		if (discard != null) {
 			discard.displayCard(g, 0, 0, 0);
-		}else{        
+		} else {
 			g.drawImage(noCards, 0, 0, 100, 140, null);
 		}
 	}
+
 }

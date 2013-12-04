@@ -38,8 +38,8 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(800, 600);
-		this.setLocation(dim.width/2-this.getSize().width/2, 
-				dim.height/2-this.getSize().height/2);
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height
+				/ 2 - this.getSize().height / 2);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.GREEN.darker().darker().darker());
@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		//add menubar and game panel
+		// add menubar and game panel
 		setJMenuBar(new UnoMenuBar());
 
 	}
