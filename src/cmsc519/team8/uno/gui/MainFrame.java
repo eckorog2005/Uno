@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -49,8 +50,6 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 
 		// add menubar and game panel
-		setJMenuBar(new UnoMenuBar());
-
+		setJMenuBar(new UnoMenuBar(contentPane));
 	}
-
 }

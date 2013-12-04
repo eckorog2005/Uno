@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class UnoMenuBar extends JMenuBar {
@@ -22,7 +23,7 @@ public class UnoMenuBar extends JMenuBar {
 	/**
 	 * Create the panel.
 	 */
-	public UnoMenuBar() {
+	public UnoMenuBar(final JPanel gamePanel) {
 		super();
 
 		// add game option menu
@@ -36,7 +37,7 @@ public class UnoMenuBar extends JMenuBar {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new UnoGamePanel().restart();
+					((UnoGamePanel)gamePanel).restart();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

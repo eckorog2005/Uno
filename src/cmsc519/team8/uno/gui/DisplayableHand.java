@@ -1,6 +1,5 @@
 package cmsc519.team8.uno.gui;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
