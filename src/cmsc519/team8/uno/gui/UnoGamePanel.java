@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import cmsc519.team8.uno.data.Card;
 import cmsc519.team8.uno.data.CardColorEnum;
 import cmsc519.team8.uno.data.CardValueEnum;
 import cmsc519.team8.uno.data.Deck;
@@ -60,7 +61,7 @@ public class UnoGamePanel extends JPanel {
 	public UnoGamePanel() {
 		this.setLayout(null);
 
-		//set background color
+		// set background color
 		setBackground(Color.GREEN.darker().darker().darker());
 
 		// add labels and status
@@ -150,9 +151,9 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 
-		//add controlButton
+		// add controlButton
 		controlButton = new JButton("StartGame");
-		controlButton.setSize(100,25);
+		controlButton.setSize(100, 25);
 		controlButton.setLocation(260, 258);
 		controlButton.setVisible(true);
 		controlButton.addMouseListener(new MouseAdapter() {
@@ -304,6 +305,12 @@ public class UnoGamePanel extends JPanel {
 		displayableDeck.setDeck(deck);
 	}
 
+	public void shuffle(Card card) {
+		Deck deck = displayableDeck.getDeck();
+		deck.shuffle(card);
+		displayableDeck.setDeck(deck);
+	}
+
 	public void deal(String dealer) {
 		for (int i = 0; i < HAND_SIZE; i++) {
 			userHand.addCard(displayableDeck.drawCard());
@@ -311,7 +318,15 @@ public class UnoGamePanel extends JPanel {
 			computer2.addCard(displayableDeck.drawCard());
 			computer3.addCard(displayableDeck.drawCard());
 		}
+
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+		while (displayableDiscardPile.getDiscardCard().getCard().getCardValue()
+				.toString() == "WILD") {
+			shuffle(displayableDiscardPile.getDiscardCard().getCard());
+			displayableDiscardPile.clearDiscardPile();
+			displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
+		}
+
 		if (dealer.equals("user")) {
 			System.out.println("computer 1 plays first");
 			letComputerPlay(computer1);
@@ -422,11 +437,11 @@ public class UnoGamePanel extends JPanel {
 		while (flags < 1) {
 			selectedValue = (String) JOptionPane.showInputDialog(null,
 
-					"Select a color", "Wild Card!",
+			"Select a color", "Wild Card!",
 
-					JOptionPane.INFORMATION_MESSAGE, null,
+			JOptionPane.INFORMATION_MESSAGE, null,
 
-					possibleValues, possibleValues[0]);
+			possibleValues, possibleValues[0]);
 			if (selectedValue != null) {
 				returnValue = CardColorEnum.valueOf(selectedValue);
 				flags++;
@@ -466,8 +481,8 @@ public class UnoGamePanel extends JPanel {
 				"Deck is empty, the winner of the game is: "
 						+ "\n<HTML><font size=12>" + findWinner()
 						+ "</font></HTML>\n", "GAME OVER",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-						null, possibleValues, possibleValues[1]);
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
@@ -489,8 +504,8 @@ public class UnoGamePanel extends JPanel {
 		int selectedValue = JOptionPane.showOptionDialog(this,
 				"Congratulations on winning UNO : \n" + "<HTML><font size=12>"
 						+ findWinner() + "</font></HTML>\n", "GAME OVER",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-						null, possibleValues, possibleValues[1]);
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
@@ -515,8 +530,8 @@ public class UnoGamePanel extends JPanel {
 			cmd.append(jvmArg + " ");
 		}
 		cmd.append("-cp ")
-		.append(ManagementFactory.getRuntimeMXBean().getClassPath())
-		.append(" ");
+				.append(ManagementFactory.getRuntimeMXBean().getClassPath())
+				.append(" ");
 		cmd.append(MainFrame.class.getName()).append(" ");
 		Runtime.getRuntime().exec(cmd.toString());
 		System.exit(0);

@@ -38,7 +38,7 @@ public class UnoMenuBar extends JMenuBar {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					((UnoGamePanel)gamePanel).restart();
+					((UnoGamePanel) gamePanel).restart();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -71,9 +71,9 @@ public class UnoMenuBar extends JMenuBar {
 					textArea.setLineWrap(true);
 					textArea.setWrapStyleWord(true);
 
-					JScrollPane scroll = new JScrollPane (textArea, 
-							   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
-							   JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+					JScrollPane scroll = new JScrollPane(textArea,
+							JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+							JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 					while ((line = br.readLine()) != null) {
 						if (line.trim().length() == 0) {

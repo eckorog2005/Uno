@@ -22,7 +22,7 @@ public class DisplayableDiscardPile extends JPanel {
 		discard = null;
 		String filename = "/images/unoCards/BLANK PILE.gif";
 		noCards = new ImageIcon(getClass().getResource(filename)).getImage();
-		//set background color
+		// set background color
 		setBackground(Color.GREEN.darker().darker().darker());
 	}
 
