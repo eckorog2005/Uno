@@ -1,7 +1,6 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -42,7 +41,6 @@ public class MainFrame extends JFrame {
 				/ 2 - this.getSize().height / 2);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setBackground(Color.GREEN.darker().darker().darker());
 		contentPane = new UnoGamePanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class UnoMenuBar extends JMenuBar {
@@ -70,6 +71,10 @@ public class UnoMenuBar extends JMenuBar {
 					textArea.setLineWrap(true);
 					textArea.setWrapStyleWord(true);
 
+					JScrollPane scroll = new JScrollPane (textArea, 
+							   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+							   JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
 					while ((line = br.readLine()) != null) {
 						if (line.trim().length() == 0) {
 							textArea.append(newline);
@@ -78,7 +83,7 @@ public class UnoMenuBar extends JMenuBar {
 					}
 					br.close();
 
-					JOptionPane.showMessageDialog(null, textArea, "UNO Help",
+					JOptionPane.showMessageDialog(null, scroll, "UNO Help",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e) {
 					// do something if the file is not found
