@@ -72,7 +72,7 @@ public class DisplayableHand extends JPanel {
 		this.label = label;
 		this.name = label.getText();
 	}
-	
+
 	public JLabel getLabel() {
 		return label;
 	}
@@ -106,7 +106,7 @@ public class DisplayableHand extends JPanel {
 		}
 		repaint();
 	}
-	
+
 	public void setVisibility(boolean isVisible) {
 		this.isVisible = isVisible;
 	}

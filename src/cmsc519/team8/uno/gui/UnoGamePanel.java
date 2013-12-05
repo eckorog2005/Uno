@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -45,9 +46,9 @@ public class UnoGamePanel extends JPanel {
 	private JButton controlButton;
 
 	private boolean preGame;
-	
+
 	private String dealer;
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -62,12 +63,12 @@ public class UnoGamePanel extends JPanel {
 		// add labels and status
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(70, 20);
-		lblUser.setLocation(388, 340);
+		lblUser.setLocation(388, 356);
 		lblUser.setVisible(true);
 		add(lblUser);
 		JLabel userStatus = new JLabel("");
 		userStatus.setSize(70, 20);
-		userStatus.setLocation(381, 360);
+		userStatus.setLocation(381, 376);
 		userStatus.setVisible(true);
 		add(userStatus);
 
@@ -119,7 +120,7 @@ public class UnoGamePanel extends JPanel {
 
 		// add hands
 		userHand.setSize(500, 160);
-		userHand.setLocation(150, 380);
+		userHand.setLocation(150, 396);
 		userHand.setLabel(lblUser);
 		userHand.setStatus(userStatus);
 		add(userHand);
@@ -152,11 +153,11 @@ public class UnoGamePanel extends JPanel {
 		add(displayableDiscardPile);
 
 		preGame = true;
+		// Pre game: Determines dealer and player turn.
 		preGame();
 	}
-	
+
 	private void preGame() {
-		// Pre game: Determines dealer and player turn.
 		// Get one cards each. just one.
 		shuffle();
 		computer1.setVisibility(true);
@@ -170,54 +171,51 @@ public class UnoGamePanel extends JPanel {
 
 	private void determineDealer() {
 		// get values of each card. (in a integer form so it can be compared).
-		int userVal = getIntCardVal(userHand);
-		int comp1Val = getIntCardVal(computer1);
-		int comp2Val = getIntCardVal(computer2);
-		int comp3Val = getIntCardVal(computer3);
+		ArrayList<DisplayableHand> players = new ArrayList<DisplayableHand>();
+		players.add(userHand);
+		players.add(computer1);
+		players.add(computer2);
+		players.add(computer3);
 
 		// Testing to see what Values each players has.
-		System.out.println(userVal + "" + comp1Val);
-		int[] data = new int[4];
-		data[0] = userVal;
-		data[1] = comp1Val;
-		data[2] = comp2Val;
-		data[3] = comp3Val;
+		System.out.println(getIntCardVal(players.get(0)) + ""
+				+ getIntCardVal(players.get(1)));
+		int[] data = new int[players.size()];
+		for (int i = 0; i < data.length; i++)
+			data[i] = getIntCardVal(players.get(i));
 
 		Arrays.sort(data);
 
 		// Therefore, it is possible to find dealer and find the right "turn"
-		if (data[3] == userVal) {
-
+		if (data[3] == getIntCardVal(players.get(0))) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
 			dealer = "user";
-			return; // 0 Turn Implies : Com1 -> Com2 -> Com3 -> User.
-		} else if (data[3] == comp1Val) {
-
+			return; // 0 Implies : Com1 -> Com2 -> Com3 -> User.
+		} else if (data[3] == getIntCardVal(players.get(1))) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
 			dealer = "computer1";
-			return; // 1 implies: Com2 -> Com3 -> User -> Comp1.
-		} else if (data[3] == comp2Val) {
+			return; // 1: Com2 -> Com3 -> User -> Comp1.
+		} else if (data[3] == getIntCardVal(players.get(2))) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
 			dealer = "computer2";
-			return;
-			// Turn 2 : computer 3 -> user -> comp1 -> comp2 and loop.
-		} else if (data[3] == comp3Val) {
+			return; // 2: computer 3 -> user -> comp1 -> comp2 and loop.
+		} else if (data[3] == getIntCardVal(players.get(3))) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
 			dealer = "computer3";
-			return;
-			// Turn : user -> computer1 - > computer 2-> computer 3 and iterate.
+			return; // 3: user -> computer1 - > computer 2-> computer 3 and
+					// iterate.
 		} else
 			userHand.clearHand();
 		computer1.clearHand();
@@ -226,7 +224,7 @@ public class UnoGamePanel extends JPanel {
 		dealer = "";
 		return;
 	}
-	
+
 	private void gameSetup() {
 		// Displays the dealer
 		if (dealer.equals("user")) {
@@ -252,13 +250,16 @@ public class UnoGamePanel extends JPanel {
 		computer1.setVisibility(false);
 		computer2.setVisibility(false);
 		computer3.setVisibility(false);
-		
+
 		shuffle();
 		// The game should be played in a proper term based on dealer.
 		deal(dealer);
 	}
-	
+
 	private int getIntCardVal(DisplayableHand player) {
+		if (player.getCurrentCard(0).equals(null))
+			return -1;
+
 		// It will return integer value of the cards.
 		DisplayableCard userHandValue = player.getCurrentCard(0);
 
@@ -285,7 +286,6 @@ public class UnoGamePanel extends JPanel {
 		} else
 			return 0; // Wild card is 0.
 	}
-
 
 	public void shuffle() {
 		Deck deck = new Deck();
@@ -453,11 +453,10 @@ public class UnoGamePanel extends JPanel {
 
 		int selectedValue = JOptionPane.showOptionDialog(this,
 				"Deck is empty, the winner of the game is: "
-						+ "\n<HTML><font size=12>"+ findWinner() + 
-						"</font></HTML>\n", "GAME OVER",
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
-						possibleValues[1]);
+						+ "\n<HTML><font size=12>" + findWinner()
+						+ "</font></HTML>\n", "GAME OVER",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
@@ -477,12 +476,10 @@ public class UnoGamePanel extends JPanel {
 		Object[] possibleValues = { "Restart", "Quit" };
 
 		int selectedValue = JOptionPane.showOptionDialog(this,
-				"Congratulations on winning UNO : \n" +
-						"<HTML><font size=12>"+ findWinner() + 
-						"</font></HTML>\n", "GAME OVER",
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
-						possibleValues[1]);
+				"Congratulations on winning UNO : \n" + "<HTML><font size=12>"
+						+ findWinner() + "</font></HTML>\n", "GAME OVER",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
