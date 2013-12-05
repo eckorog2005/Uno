@@ -56,10 +56,10 @@ public class DisplayableHand extends JPanel {
 		cards = new ArrayList<DisplayableCard>();
 		this.label = null;
 		this.status = null;
-		
-		//set background color
+
+		// set background color
 		setBackground(Color.GREEN.darker().darker().darker());
-		
+
 		if (!isVisible) {
 			try {
 				image = ImageIO.read(getClass().getResource(

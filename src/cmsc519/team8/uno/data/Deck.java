@@ -75,6 +75,19 @@ public class Deck {
 		}
 	}
 
+	public void shuffle(Card card) {
+		cards.add(card);
+
+		Card temp;
+		Random rand = new Random();
+		for (int i = cards.size() - 1; i >= 1; i--) {
+			temp = cards.get(i);
+			int randInt = Math.abs(rand.nextInt()) % i;
+			cards.set(i, cards.get(randInt));
+			cards.set(randInt, temp);
+		}
+	}
+
 	public void printDeck() {
 		for (int i = 0; i < cards.size(); i++) {
 			System.out.println(cards.get(i).toString());
