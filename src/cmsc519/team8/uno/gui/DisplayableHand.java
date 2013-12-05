@@ -223,9 +223,12 @@ public class DisplayableHand extends JPanel {
 			for (DisplayableCard card : cards) {
 				if (card.getUserCardRectangle().contains(point)) {
 					prev = card;
+					//this card wasnt clicked but last one was
 				} else if (prev != null
 						&& !card.getUserCardRectangle().contains(point)) {
+					//play if already selected
 					if (prev.getCard().equals(hand.getSelectedCard())) {
+						//if draw a card, cant play since its not last card
 						if(hasDrawnCardAlready){
 							// display warning
 							JOptionPane.showMessageDialog(null,
@@ -233,6 +236,7 @@ public class DisplayableHand extends JPanel {
 									+ "last card after drawing from the pile", 
 									"UNO Error",
 									JOptionPane.ERROR_MESSAGE);
+						//error trying to play selected card
 						} else if (!((UnoGamePanel) getParent()).
 								playUserCard(prev)) {
 							// display warning
@@ -242,6 +246,7 @@ public class DisplayableHand extends JPanel {
 									JOptionPane.ERROR_MESSAGE);
 						}
 					} else {
+						//select the card
 						hand.setSelectedCard(prev.getCard());
 						cardSelected = prev;
 						repaint();
@@ -250,6 +255,7 @@ public class DisplayableHand extends JPanel {
 				}
 			}
 
+			//see if last card was clicked
 			if (prev != null) {
 				if (prev.getCard().equals(hand.getSelectedCard())) {
 					if (!((UnoGamePanel) getParent()).playUserCard(prev)) {
@@ -289,6 +295,10 @@ public class DisplayableHand extends JPanel {
 		return cards.get(i);
 	}
 
+	/**
+	 * set wild card for a cpu that played the card
+	 * @param card
+	 */
 	public void setWildCardValue(DisplayableCard card) {
 		int blue = 0;
 		int yellow = 0;

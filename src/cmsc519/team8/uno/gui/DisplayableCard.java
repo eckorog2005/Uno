@@ -52,6 +52,7 @@ public class DisplayableCard {
 			g.drawImage(ImageUtils.rotate(image, Math.toRadians(rotation)), x,
 					y, 140, 100, null);
 		} else {
+			//display wild card and its color
 			if (!getCard().getWildColor().equals(CardColorEnum.BLACK)) {
 				String name = getCard().getWildColor().toString().toLowerCase();
 				Field field;
@@ -60,19 +61,14 @@ public class DisplayableCard {
 					field = Class.forName("java.awt.Color").getField(name);
 					color = (Color) field.get(null);
 				} catch (NoSuchFieldException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				image = ImageUtils.colorCard(image, color);

@@ -35,6 +35,7 @@ public class UnoMenuBar extends JMenuBar {
 		// quit button
 		JMenuItem close = new JMenuItem("Exit");
 
+		//add restart actions
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -48,15 +49,19 @@ public class UnoMenuBar extends JMenuBar {
 				}
 			}
 		});
+		
+		//add quit action
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
+		
+		//add to menu pulldown
 		menu.add(newGame);
 		menu.add(close);
 
-		// help option
+		// help option and action
 		JMenuItem help = new JMenuItem("Help");
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -91,6 +96,7 @@ public class UnoMenuBar extends JMenuBar {
 			}
 		});
 
+		//add to menubar
 		add(menu);
 		add(help);
 	}

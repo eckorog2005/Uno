@@ -18,6 +18,12 @@ public class ImageUtils {
 		return gd.getDefaultConfiguration();
 	}
 
+	/**
+	 * rotates an image
+	 * @param image
+	 * @param angle
+	 * @return
+	 */
 	public static BufferedImage rotate(BufferedImage image, double angle) {
 		double sin = Math.abs(Math.sin(angle)), cos = Math.abs(Math.cos(angle));
 		int w = image.getWidth(), h = image.getHeight();
@@ -34,6 +40,12 @@ public class ImageUtils {
 		return result;
 	}
 
+	/**
+	 * color an image to the passed in color. 0.5 opacity
+	 * @param loadImg
+	 * @param color
+	 * @return
+	 */
 	public static BufferedImage colorCard(BufferedImage loadImg, Color color) {
 		BufferedImage img = new BufferedImage(loadImg.getWidth(),
 				loadImg.getHeight(), BufferedImage.TRANSLUCENT);

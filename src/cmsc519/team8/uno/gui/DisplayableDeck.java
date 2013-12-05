@@ -50,6 +50,7 @@ public class DisplayableDeck extends JPanel {
 
 	private class MouseController extends MouseAdapter {
 		public void mouseClicked(MouseEvent me) {
+			//handle various action in gamepanel
 			((UnoGamePanel) getParent()).checkState();
 		}
 	}

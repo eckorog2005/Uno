@@ -28,6 +28,7 @@ public class UnoGamePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -8758461344572468847L;
 
+	//starting hand size
 	private final int HAND_SIZE = 7;
 
 	private final DisplayableDeck displayableDeck = new DisplayableDeck(
@@ -44,8 +45,10 @@ public class UnoGamePanel extends JPanel {
 	private final DisplayableHand computer3 = new DisplayableHand(false, 650,
 			25, true, true);
 
+	//action button for the user
 	private JButton controlButton;
 
+	//state of game, either in pregame or actual game
 	private boolean preGame;
 
 	private String dealer;
@@ -117,6 +120,7 @@ public class UnoGamePanel extends JPanel {
 		cpu3Status.setForeground(Color.BLACK);
 		add(cpu3Status);
 
+		
 		// add hands
 		userHand.setSize(500, 160);
 		userHand.setLocation(150, 380);
@@ -142,6 +146,7 @@ public class UnoGamePanel extends JPanel {
 		computer3.setStatus(cpu3Status);
 		add(computer3);
 
+		
 		// add discard and deck
 		displayableDeck.setSize(100, 140);
 		displayableDeck.setLocation(260, 200);
@@ -151,6 +156,7 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 
+		
 		// add controlButton
 		controlButton = new JButton("StartGame");
 		controlButton.setSize(100, 25);
@@ -164,11 +170,15 @@ public class UnoGamePanel extends JPanel {
 		});
 		add(controlButton, 0);
 
+		//start pregame
 		preGame = true;
 		// Pre game: Determines dealer and player turn.
 		preGame();
 	}
 
+	/**
+	 * controls the pregame actions
+	 */
 	private void preGame() {
 		// Get one cards each. just one.
 		shuffle();
@@ -181,6 +191,9 @@ public class UnoGamePanel extends JPanel {
 		computer3.addCard(displayableDeck.drawCard());
 	}
 
+	/**
+	 * finds out who will be the dealer
+	 */
 	private void determineDealer() {
 		// get values of each card. (in a integer form so it can be compared).
 		ArrayList<DisplayableHand> players = new ArrayList<DisplayableHand>();
@@ -237,6 +250,9 @@ public class UnoGamePanel extends JPanel {
 		return;
 	}
 
+	/**
+	 * sets up the actual game after pre game is done
+	 */
 	private void gameSetup() {
 		// Displays the dealer
 		if (dealer.equals("user")) {
@@ -268,6 +284,12 @@ public class UnoGamePanel extends JPanel {
 		deal(dealer);
 	}
 
+	/**
+	 * used in pregame, determines the card value as an int
+	 * 
+	 * @param player player to check
+	 * @return value of pregame card
+	 */
 	private int getIntCardVal(DisplayableHand player) {
 		if (player.getCurrentCard(0).equals(null))
 			return -1;
@@ -299,18 +321,30 @@ public class UnoGamePanel extends JPanel {
 			return 0; // Wild card is 0.
 	}
 
+	/**
+	 * shuffles the deck
+	 */
 	public void shuffle() {
 		Deck deck = new Deck();
 		deck.shuffle();
 		displayableDeck.setDeck(deck);
 	}
 
+	/**
+	 * shuffles the deck by adding the card passed in
+	 * 
+	 * @param card
+	 */
 	public void shuffle(Card card) {
 		Deck deck = displayableDeck.getDeck();
 		deck.shuffle(card);
 		displayableDeck.setDeck(deck);
 	}
 
+	/**
+	 * Deal the starting hand
+	 * @param dealer
+	 */
 	public void deal(String dealer) {
 		for (int i = 0; i < HAND_SIZE; i++) {
 			userHand.addCard(displayableDeck.drawCard());
@@ -319,6 +353,7 @@ public class UnoGamePanel extends JPanel {
 			computer3.addCard(displayableDeck.drawCard());
 		}
 
+		//add card to discard unless its a wild card
 		displayableDiscardPile.setDiscardCard(displayableDeck.drawCard());
 		while (displayableDiscardPile.getDiscardCard().getCard().getCardValue()
 				.toString() == "WILD") {
@@ -388,6 +423,10 @@ public class UnoGamePanel extends JPanel {
 		return isPlayable;
 	}
 
+	/**
+	 * the "AI" for the computer player
+	 * @param computer
+	 */
 	private void letComputerPlay(DisplayableHand computer) {
 
 		if (displayableDiscardPile.getDiscardCard() == null) {
@@ -428,6 +467,10 @@ public class UnoGamePanel extends JPanel {
 
 	}
 
+	/**
+	 * used when the user plays a wild card to select its value
+	 * @return
+	 */
 	public CardColorEnum wildSelector() {
 		Object[] possibleValues = { "RED", "BLUE", "YELLOW", "GREEN" };
 		String selectedValue = "";
@@ -455,6 +498,9 @@ public class UnoGamePanel extends JPanel {
 		return returnValue;
 	}
 
+	/**
+	 * function called when the deck is clicked. various actions can happen
+	 */
 	public void checkState() {
 		if (preGame) {
 			determineDealer();
@@ -474,6 +520,9 @@ public class UnoGamePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * end game due to deck being empty
+	 */
 	public void deckEmpty() {
 		Object[] possibleValues = { "Restart", "Quit" };
 
@@ -498,6 +547,10 @@ public class UnoGamePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * ends game when someone played their last card
+	 * @param winner
+	 */
 	public void handEmpty(DisplayableHand winner) {
 		Object[] possibleValues = { "Restart", "Quit" };
 
@@ -521,6 +574,11 @@ public class UnoGamePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * restarts the game
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void restart() throws IOException, InterruptedException {
 		StringBuilder cmd = new StringBuilder();
 		cmd.append(System.getProperty("java.home") + File.separator + "bin"
@@ -537,6 +595,10 @@ public class UnoGamePanel extends JPanel {
 		System.exit(0);
 	}
 
+	/**
+	 * finds the winner of the game when the deck is empty
+	 * @return
+	 */
 	private String findWinner() {
 		String winner = null;
 		int maxPoints = Integer.MAX_VALUE;

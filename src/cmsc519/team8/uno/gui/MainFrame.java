@@ -9,6 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * main window for uno game
+ * @author rlamb
+ *
+ */
 public class MainFrame extends JFrame {
 
 	/**
@@ -17,6 +22,7 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 4618955547537310901L;
 	private JPanel contentPane;
 
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
