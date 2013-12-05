@@ -26,7 +26,7 @@ public class DisplayableHand extends JPanel {
 	private final int HAND_LENGTH = 500;
 	private final int CARD_WIDTH = 100;
 	private final int CARD_SELECT_HEIGHT = 20;
-	private boolean isUser = false;
+	private boolean isVisible = false;
 	private boolean inverted = false;
 	private boolean switchX = false;
 	private BufferedImage image = null;
@@ -46,16 +46,16 @@ public class DisplayableHand extends JPanel {
 		this.hasDrawnCardAlready = hasDrawnCardAlready;
 	}
 
-	DisplayableHand(boolean isUser, int topX, int topY, boolean inverted,
+	DisplayableHand(boolean isVisible, int topX, int topY, boolean inverted,
 			boolean switchX) {
 		hand = new Hand();
-		this.isUser = isUser;
+		this.isVisible = isVisible;
 		this.inverted = inverted;
 		this.switchX = switchX;
 		cards = new ArrayList<DisplayableCard>();
 		this.label = null;
 		this.status = null;
-		if (!isUser) {
+		if (!isVisible) {
 			try {
 				image = ImageIO.read(getClass().getResource(
 						"/images/unoCards/UNO BACK.JPG"));
@@ -71,6 +71,10 @@ public class DisplayableHand extends JPanel {
 	public void setLabel(JLabel label) {
 		this.label = label;
 		this.name = label.getText();
+	}
+	
+	public JLabel getLabel() {
+		return label;
 	}
 
 	public void setStatus(JLabel status) {
@@ -101,6 +105,10 @@ public class DisplayableHand extends JPanel {
 			status.setText("");
 		}
 		repaint();
+	}
+	
+	public void setVisibility(boolean isVisible) {
+		this.isVisible = isVisible;
 	}
 
 	@Override
@@ -144,17 +152,25 @@ public class DisplayableHand extends JPanel {
 		}
 
 		for (DisplayableCard dCard : cards) {
-			if (isUser) {
+			if (isVisible) {
 				if (switchX) {
-					dCard.displayCard(g, x, y, 90);
-				} else {
-					int actualY = y + CARD_SELECT_HEIGHT;
-
-					if (dCard.equals(cardSelected)) {
-						actualY -= CARD_SELECT_HEIGHT;
+					if (inverted) {
+						dCard.displayCard(g, x, y, 90);
+					} else {
+						dCard.displayCard(g, x, y, 90);
 					}
+				} else {
+					if (inverted) {
+						dCard.displayCard(g, x, y, 180);
+					} else {
+						int actualY = y + CARD_SELECT_HEIGHT;
 
-					dCard.displayCard(g, x, actualY, 0);
+						if (dCard.equals(cardSelected)) {
+							actualY -= CARD_SELECT_HEIGHT;
+						}
+
+						dCard.displayCard(g, x, actualY, 0);
+					}
 				}
 			} else {
 				if (switchX) {
