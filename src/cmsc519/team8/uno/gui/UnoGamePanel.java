@@ -1,11 +1,15 @@
 package cmsc519.team8.uno.gui;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,6 +41,8 @@ public class UnoGamePanel extends JPanel {
 			0, true, false);
 	private final DisplayableHand computer3 = new DisplayableHand(false, 650,
 			25, true, true);
+	
+	private JButton controlButton;
 
 	private boolean preGame;
 	
@@ -48,7 +54,7 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	/**
-	 * Create the panel. (image test right now)
+	 * Create the panel.
 	 */
 	public UnoGamePanel() {
 		this.setLayout(null);
@@ -97,6 +103,19 @@ public class UnoGamePanel extends JPanel {
 		cpu3Status.setLocation(554, 270);
 		cpu3Status.setVisible(true);
 		add(cpu3Status);
+		
+		//add controlButton
+		controlButton = new JButton("StartGame");
+		controlButton.setSize(100,25);
+		controlButton.setLocation(525, 340);
+		controlButton.setVisible(true);
+		controlButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkState();
+			}
+		});
+		add(controlButton);
 
 		// add hands
 		userHand.setSize(500, 160);
@@ -118,7 +137,7 @@ public class UnoGamePanel extends JPanel {
 		add(computer2);
 
 		computer3.setSize(140, 500);
-		computer3.setLocation(660, 25);
+		computer3.setLocation(645, 25);
 		computer3.setLabel(lblCpu3);
 		computer3.setStatus(cpu3Status);
 		add(computer3);
@@ -329,6 +348,7 @@ public class UnoGamePanel extends JPanel {
 			DisplayableCard card = userHand.removeCard(false);
 			displayableDiscardPile.setDiscardCard(card);
 			userHand.setHasDrawnCardAlready(false);
+			controlButton.setVisible(false);
 			letComputerPlay(computer1);
 			computer1.setHasDrawnCardAlready(false);
 			letComputerPlay(computer2);
@@ -414,12 +434,16 @@ public class UnoGamePanel extends JPanel {
 			determineDealer();
 			gameSetup();
 			preGame = false;
+			controlButton.setVisible(false);
+			controlButton.setText("Skip Turn");
 		} else {
 			if (userHand.hasDrawnCardAlready()) {
 				playUserCard(null);
+				controlButton.setVisible(false);
 			} else {
 				userHand.setHasDrawnCardAlready(true);
 				userHand.addCard(displayableDeck.drawCard());
+				controlButton.setVisible(true);
 			}
 		}
 	}
