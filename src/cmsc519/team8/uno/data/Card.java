@@ -78,17 +78,4 @@ public class Card {
 		return "UNO" + this.cardColor + " " + this.cardValue;
 	}
 
-	// Gets a value of the each card
-	/**
-	public int getPregameValue(Card pregameCard) {
-		// TODO Auto-generated method stub
-		if (pregameCard.cardValue.equals("ZERO")) {
-			return 0;
-		} else if (pregameCard.cardValue.equals("ONE")) {
-			return 1;
-		}
-		return 99;
-	}
-	**/
-
 }

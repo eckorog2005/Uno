@@ -96,7 +96,6 @@ public class DisplayableHand extends JPanel {
 		repaint();
 		if (cards.size() == 1 && status != null) {
 			status.setText("*UNO*");
-			System.out.println(status.getFont().toString());
 		} else if (cards.size() == 0 && !inPreGame) {
 			((UnoGamePanel) getParent()).handEmpty(this);
 		}
@@ -262,7 +261,6 @@ public class DisplayableHand extends JPanel {
 	}
 
 	public void removeComputerCard(DisplayableCard prev) {
-		System.out.println("Sucessfully removed");
 		hand.setSelectedCard(prev.getCard());
 		cardSelected = prev;
 		repaint();

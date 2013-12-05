@@ -189,9 +189,6 @@ public class UnoGamePanel extends JPanel {
 		players.add(computer2);
 		players.add(computer3);
 
-		// Testing to see what Values each players has.
-		System.out.println(getIntCardVal(players.get(0)) + ""
-				+ getIntCardVal(players.get(1)));
 		int[] data = new int[players.size()];
 		for (int i = 0; i < data.length; i++)
 			data[i] = getIntCardVal(players.get(i));
@@ -328,19 +325,19 @@ public class UnoGamePanel extends JPanel {
 		}
 
 		if (dealer.equals("user")) {
-			System.out.println("computer 1 plays first");
 			letComputerPlay(computer1);
 			letComputerPlay(computer2);
 			letComputerPlay(computer3);
+			// user turn
 		} else if (dealer.equals("computer1")) {
-			System.out.println("computer 2 plays first");
 			letComputerPlay(computer2);
 			letComputerPlay(computer3);
+			// user turn
 		} else if (dealer.equals("computer2")) {
-			System.out.println("computer 3 plays first");
 			letComputerPlay(computer3);
+			// user turn
 		} else if (dealer.equals("computer3")) {
-			System.out.println("user plays first");
+			// user turn
 		}
 
 	}
@@ -389,17 +386,10 @@ public class UnoGamePanel extends JPanel {
 	}
 
 	private void letComputerPlay(DisplayableHand computer) {
-
-		if (displayableDiscardPile.getDiscardCard() == null) {
-			System.out.print("null");
-		}
-
 		// Linear Search to find matching card to be discarded.
 		for (int i = 0; i < computer.getTotalNumbCard(); i++) {
 
 			DisplayableCard currentCardValue = computer.getCurrentCard(i);
-			System.out.println("computer card value "
-					+ currentCardValue.getCard().toString());
 
 			boolean isPlayable = currentCardValue.getCard().isPlayable(
 					displayableDiscardPile.getDiscardCard().getCard());
