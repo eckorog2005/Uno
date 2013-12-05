@@ -38,6 +38,10 @@ public class UnoGamePanel extends JPanel {
 	private final DisplayableHand computer3 = new DisplayableHand(false, 650,
 			25, true, true);
 
+	private boolean preGame;
+	
+	private String dealer;
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -93,30 +97,6 @@ public class UnoGamePanel extends JPanel {
 		cpu3Status.setLocation(554, 270);
 		cpu3Status.setVisible(true);
 		add(cpu3Status);
-		
-		// Pre game: Determines dealer and player turn.
-		String dealer = preGame(userHand, computer1, computer2, computer3);
-
-		// Determines the dealer
-		if (dealer.equals("user")) {
-			lblUser.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "You are the dealer" + "", "",
-					JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer1")) {
-			lblCpu1.setText("DEALER");
-			JOptionPane.showMessageDialog(null,
-					"Computer 1 is the dealer" + "", "",
-					JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer2")) {
-			lblCpu2.setText("DEALER");
-			JOptionPane.showMessageDialog(null,
-					"Computer 2 is the dealer" + "", "",
-					JOptionPane.PLAIN_MESSAGE);
-		} else if (dealer.equals("computer3")) {
-			lblCpu3.setText("DEALER");
-			JOptionPane.showMessageDialog(null, "Computer 3 is a dealer" + "",
-					"", JOptionPane.PLAIN_MESSAGE);
-		}
 
 		// add hands
 		userHand.setSize(500, 160);
@@ -138,7 +118,7 @@ public class UnoGamePanel extends JPanel {
 		add(computer2);
 
 		computer3.setSize(140, 500);
-		computer3.setLocation(650, 25);
+		computer3.setLocation(660, 25);
 		computer3.setLabel(lblCpu3);
 		computer3.setStatus(cpu3Status);
 		add(computer3);
@@ -152,22 +132,24 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
 
-		shuffle();
-		// The game should be played in a proper term based on dealer.
-		deal(dealer);
-
+		preGame = true;
+		preGame();
 	}
-
-	private String preGame(DisplayableHand userHand, DisplayableHand computer1,
-			DisplayableHand computer2, DisplayableHand computer3) {
-
+	
+	private void preGame() {
+		// Pre game: Determines dealer and player turn.
 		// Get one cards each. just one.
 		shuffle();
+		computer1.setVisibility(true);
+		computer2.setVisibility(true);
+		computer3.setVisibility(true);
 		userHand.addCard(displayableDeck.drawCard());
 		computer1.addCard(displayableDeck.drawCard());
 		computer2.addCard(displayableDeck.drawCard());
 		computer3.addCard(displayableDeck.drawCard());
+	}
 
+	private void determineDealer() {
 		// get values of each card. (in a integer form so it can be compared).
 		int userVal = getIntCardVal(userHand);
 		int comp1Val = getIntCardVal(computer1);
@@ -191,35 +173,70 @@ public class UnoGamePanel extends JPanel {
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
-			return "user"; // 0 Turn Implies : Com1 -> Com2 -> Com3 -> User.
+			dealer = "user";
+			return; // 0 Turn Implies : Com1 -> Com2 -> Com3 -> User.
 		} else if (data[3] == comp1Val) {
 
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
-
-			return "computer1"; // 1 implies: Com2 -> Com3 -> User -> Comp1.
+			dealer = "computer1";
+			return; // 1 implies: Com2 -> Com3 -> User -> Comp1.
 		} else if (data[3] == comp2Val) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
-			return "computer2";
+			dealer = "computer2";
+			return;
 			// Turn 2 : computer 3 -> user -> comp1 -> comp2 and loop.
 		} else if (data[3] == comp3Val) {
 			userHand.clearHand();
 			computer1.clearHand();
 			computer2.clearHand();
 			computer3.clearHand();
-			return "computer3";
+			dealer = "computer3";
+			return;
 			// Turn : user -> computer1 - > computer 2-> computer 3 and iterate.
 		} else
 			userHand.clearHand();
 		computer1.clearHand();
 		computer2.clearHand();
 		computer3.clearHand();
-		return "";
+		dealer = "";
+		return;
+	}
+	
+	private void gameSetup() {
+		// Displays the dealer
+		if (dealer.equals("user")) {
+			userHand.getLabel().setText("DEALER");
+			JOptionPane.showMessageDialog(null, "You are the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer1")) {
+			computer1.getLabel().setText("DEALER");
+			JOptionPane.showMessageDialog(null,
+					"Computer 1 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer2")) {
+			computer2.getLabel().setText("DEALER");
+			JOptionPane.showMessageDialog(null,
+					"Computer 2 is the dealer" + "", "",
+					JOptionPane.PLAIN_MESSAGE);
+		} else if (dealer.equals("computer3")) {
+			computer3.getLabel().setText("DEALER");
+			JOptionPane.showMessageDialog(null, "Computer 3 is a dealer" + "",
+					"", JOptionPane.PLAIN_MESSAGE);
+		}
+
+		computer1.setVisibility(false);
+		computer2.setVisibility(false);
+		computer3.setVisibility(false);
+		
+		shuffle();
+		// The game should be played in a proper term based on dealer.
+		deal(dealer);
 	}
 	
 	private int getIntCardVal(DisplayableHand player) {
@@ -232,26 +249,19 @@ public class UnoGamePanel extends JPanel {
 			return 1;
 		} else if (userHandValue.getCard().getCardValue().toString() == "TWO") {
 			return 2;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "THREE") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "THREE") {
 			return 3;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "FOUR") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "FOUR") {
 			return 4;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "FIVE") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "FIVE") {
 			return 5;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "SIX") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "SIX") {
 			return 6;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "SEVEN") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "SEVEN") {
 			return 7;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "EIGHT") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "EIGHT") {
 			return 8;
-		}
-		if (userHandValue.getCard().getCardValue().toString() == "NINE") {
+		} else if (userHandValue.getCard().getCardValue().toString() == "NINE") {
 			return 9;
 		} else
 			return 0; // Wild card is 0.
@@ -399,13 +409,18 @@ public class UnoGamePanel extends JPanel {
 		return returnValue;
 	}
 
-	public void drawUserCard() {
-		// TODO check if user turn
-		if (userHand.hasDrawnCardAlready()) {
-			playUserCard(null);
+	public void checkState() {
+		if (preGame) {
+			determineDealer();
+			gameSetup();
+			preGame = false;
 		} else {
-			userHand.setHasDrawnCardAlready(true);
-			userHand.addCard(displayableDeck.drawCard());
+			if (userHand.hasDrawnCardAlready()) {
+				playUserCard(null);
+			} else {
+				userHand.setHasDrawnCardAlready(true);
+				userHand.addCard(displayableDeck.drawCard());
+			}
 		}
 	}
 
