@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
 				/ 2 - this.getSize().height / 2);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBackground(Color.GREEN.darker().darker().darker());
+//		setBackground(Color.GREEN.darker().darker().darker());
 		contentPane = new UnoGamePanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
