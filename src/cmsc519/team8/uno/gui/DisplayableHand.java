@@ -226,7 +226,15 @@ public class DisplayableHand extends JPanel {
 				} else if (prev != null
 						&& !card.getUserCardRectangle().contains(point)) {
 					if (prev.getCard().equals(hand.getSelectedCard())) {
-						if (!((UnoGamePanel) getParent()).playUserCard(prev)) {
+						if(hasDrawnCardAlready){
+							// display warning
+							JOptionPane.showMessageDialog(null,
+									"Unable to play card, can only play "
+									+ "last card after drawing from the pile", 
+									"UNO Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (!((UnoGamePanel) getParent()).
+								playUserCard(prev)) {
 							// display warning
 							JOptionPane.showMessageDialog(null,
 									"Unable to play selected card, Please try "
