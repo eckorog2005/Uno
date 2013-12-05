@@ -51,9 +51,8 @@ public class Card {
 	/**
 	 * checks to see if this called can be played on top of other card
 	 * 
-	 * @param otherCard
-	 *            - discarded card
-	 * @return
+	 * @param otherCard - discarded card
+	 * @return if playable
 	 */
 	public boolean isPlayable(Card otherCard) {
 		if (this.cardValue.equals(CardValueEnum.WILD)) {
@@ -69,7 +68,6 @@ public class Card {
 		}
 	}
 
-	@Override
 	public String toString() {
 		return this.cardColor + " " + this.cardValue;
 	}
@@ -77,18 +75,5 @@ public class Card {
 	public String getCardImg() {
 		return "UNO" + this.cardColor + " " + this.cardValue;
 	}
-
-	// Gets a value of the each card
-	/**
-	public int getPregameValue(Card pregameCard) {
-		// TODO Auto-generated method stub
-		if (pregameCard.cardValue.equals("ZERO")) {
-			return 0;
-		} else if (pregameCard.cardValue.equals("ONE")) {
-			return 1;
-		}
-		return 99;
-	}
-	**/
 
 }
