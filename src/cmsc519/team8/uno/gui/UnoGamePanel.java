@@ -3,7 +3,6 @@ package cmsc519.team8.uno.gui;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -108,7 +107,7 @@ public class UnoGamePanel extends JPanel {
 		//add controlButton
 		controlButton = new JButton("StartGame");
 		controlButton.setSize(100,25);
-		controlButton.setLocation(525, 340);
+		controlButton.setLocation(260, 258);
 		controlButton.setVisible(true);
 		controlButton.addMouseListener(new MouseAdapter() {
 			@Override
