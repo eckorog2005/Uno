@@ -63,12 +63,12 @@ public class UnoGamePanel extends JPanel {
 		// add labels and status
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(70, 20);
-		lblUser.setLocation(388, 356);
+		lblUser.setLocation(388, 340);
 		lblUser.setVisible(true);
 		add(lblUser);
 		JLabel userStatus = new JLabel("");
 		userStatus.setSize(70, 20);
-		userStatus.setLocation(381, 376);
+		userStatus.setLocation(381, 360);
 		userStatus.setVisible(true);
 		add(userStatus);
 
@@ -120,7 +120,7 @@ public class UnoGamePanel extends JPanel {
 
 		// add hands
 		userHand.setSize(500, 160);
-		userHand.setLocation(150, 396);
+		userHand.setLocation(150, 380);
 		userHand.setLabel(lblUser);
 		userHand.setStatus(userStatus);
 		add(userHand);
