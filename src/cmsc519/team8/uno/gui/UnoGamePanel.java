@@ -1,5 +1,6 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,7 +43,7 @@ public class UnoGamePanel extends JPanel {
 			0, true, false);
 	private final DisplayableHand computer3 = new DisplayableHand(false, 650,
 			25, true, true);
-	
+
 	private JButton controlButton;
 
 	private boolean preGame;
@@ -60,63 +61,61 @@ public class UnoGamePanel extends JPanel {
 	public UnoGamePanel() {
 		this.setLayout(null);
 
+		//set background color
+		setBackground(Color.GREEN.darker().darker().darker());
+
 		// add labels and status
 		JLabel lblUser = new JLabel("User");
 		lblUser.setSize(70, 20);
 		lblUser.setLocation(388, 340);
 		lblUser.setVisible(true);
+		lblUser.setForeground(Color.BLACK);
 		add(lblUser);
 		JLabel userStatus = new JLabel("");
 		userStatus.setSize(70, 20);
 		userStatus.setLocation(381, 360);
 		userStatus.setVisible(true);
+		userStatus.setForeground(Color.BLACK);
 		add(userStatus);
 
 		JLabel lblCpu1 = new JLabel("Computer1");
 		lblCpu1.setSize(110, 20);
 		lblCpu1.setLocation(150, 250);
 		lblCpu1.setVisible(true);
+		lblCpu1.setForeground(Color.BLACK);
 		add(lblCpu1);
 		JLabel cpu1Status = new JLabel("");
 		cpu1Status.setSize(110, 20);
 		cpu1Status.setLocation(164, 270);
 		cpu1Status.setVisible(true);
+		cpu1Status.setForeground(Color.BLACK);
 		add(cpu1Status);
 
 		JLabel lblCpu2 = new JLabel("Computer2");
 		lblCpu2.setSize(110, 20);
 		lblCpu2.setLocation(365, 150);
 		lblCpu2.setVisible(true);
+		lblCpu2.setForeground(Color.BLACK);
 		add(lblCpu2);
 		JLabel cpu2Status = new JLabel("");
 		cpu2Status.setSize(110, 20);
 		cpu2Status.setLocation(379, 170);
 		cpu2Status.setVisible(true);
+		cpu2Status.setForeground(Color.BLACK);
 		add(cpu2Status);
 
 		JLabel lblCpu3 = new JLabel("Computer3");
 		lblCpu3.setSize(110, 20);
 		lblCpu3.setLocation(540, 250);
 		lblCpu3.setVisible(true);
+		lblCpu3.setForeground(Color.BLACK);
 		add(lblCpu3);
 		JLabel cpu3Status = new JLabel("");
 		cpu3Status.setSize(110, 20);
 		cpu3Status.setLocation(554, 270);
 		cpu3Status.setVisible(true);
+		cpu3Status.setForeground(Color.BLACK);
 		add(cpu3Status);
-		
-		//add controlButton
-		controlButton = new JButton("StartGame");
-		controlButton.setSize(100,25);
-		controlButton.setLocation(525, 340);
-		controlButton.setVisible(true);
-		controlButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				checkState();
-			}
-		});
-		add(controlButton);
 
 		// add hands
 		userHand.setSize(500, 160);
@@ -151,6 +150,19 @@ public class UnoGamePanel extends JPanel {
 		displayableDiscardPile.setSize(100, 140);
 		displayableDiscardPile.setLocation(410, 200);
 		add(displayableDiscardPile);
+
+		//add controlButton
+		controlButton = new JButton("StartGame");
+		controlButton.setSize(100,25);
+		controlButton.setLocation(525, 340);
+		controlButton.setVisible(true);
+		controlButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkState();
+			}
+		});
+		add(controlButton);
 
 		preGame = true;
 		// Pre game: Determines dealer and player turn.
@@ -215,7 +227,7 @@ public class UnoGamePanel extends JPanel {
 			computer3.clearHand();
 			dealer = "computer3";
 			return; // 3: user -> computer1 - > computer 2-> computer 3 and
-					// iterate.
+			// iterate.
 		} else
 			userHand.clearHand();
 		computer1.clearHand();
@@ -411,11 +423,11 @@ public class UnoGamePanel extends JPanel {
 		while (flags < 1) {
 			selectedValue = (String) JOptionPane.showInputDialog(null,
 
-			"Select a color", "Wild Card!",
+					"Select a color", "Wild Card!",
 
-			JOptionPane.INFORMATION_MESSAGE, null,
+					JOptionPane.INFORMATION_MESSAGE, null,
 
-			possibleValues, possibleValues[0]);
+					possibleValues, possibleValues[0]);
 			if (selectedValue != null) {
 				returnValue = CardColorEnum.valueOf(selectedValue);
 				flags++;
@@ -455,8 +467,8 @@ public class UnoGamePanel extends JPanel {
 				"Deck is empty, the winner of the game is: "
 						+ "\n<HTML><font size=12>" + findWinner()
 						+ "</font></HTML>\n", "GAME OVER",
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-				null, possibleValues, possibleValues[1]);
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+						null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
@@ -478,8 +490,8 @@ public class UnoGamePanel extends JPanel {
 		int selectedValue = JOptionPane.showOptionDialog(this,
 				"Congratulations on winning UNO : \n" + "<HTML><font size=12>"
 						+ findWinner() + "</font></HTML>\n", "GAME OVER",
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-				null, possibleValues, possibleValues[1]);
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+						null, possibleValues, possibleValues[1]);
 		if (selectedValue == 1) {
 			System.exit(0);
 		} else {
@@ -504,8 +516,8 @@ public class UnoGamePanel extends JPanel {
 			cmd.append(jvmArg + " ");
 		}
 		cmd.append("-cp ")
-				.append(ManagementFactory.getRuntimeMXBean().getClassPath())
-				.append(" ");
+		.append(ManagementFactory.getRuntimeMXBean().getClassPath())
+		.append(" ");
 		cmd.append(MainFrame.class.getName()).append(" ");
 		Runtime.getRuntime().exec(cmd.toString());
 		System.exit(0);

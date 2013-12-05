@@ -1,5 +1,6 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -55,6 +56,10 @@ public class DisplayableHand extends JPanel {
 		cards = new ArrayList<DisplayableCard>();
 		this.label = null;
 		this.status = null;
+		
+		//set background color
+		setBackground(Color.GREEN.darker().darker().darker());
+		
 		if (!isVisible) {
 			try {
 				image = ImageIO.read(getClass().getResource(

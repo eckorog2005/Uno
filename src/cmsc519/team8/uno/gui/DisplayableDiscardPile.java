@@ -1,5 +1,6 @@
 package cmsc519.team8.uno.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -21,6 +22,8 @@ public class DisplayableDiscardPile extends JPanel {
 		discard = null;
 		String filename = "/images/unoCards/BLANK PILE.gif";
 		noCards = new ImageIcon(getClass().getResource(filename)).getImage();
+		//set background color
+		setBackground(Color.GREEN.darker().darker().darker());
 	}
 
 	private DisplayableCard discard;
