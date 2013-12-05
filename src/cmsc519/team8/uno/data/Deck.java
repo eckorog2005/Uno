@@ -50,7 +50,7 @@ public class Deck {
 	}
 
 	private ArrayList<Card> cards;
-	public final int DECK_SIZE = 82;
+	public final int DECK_SIZE = 80;
 
 	public Card drawCard() {
 		if (!cards.isEmpty()) {
