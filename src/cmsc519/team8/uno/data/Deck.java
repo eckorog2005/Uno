@@ -17,6 +17,7 @@ public class Deck {
 
 	private void setupDeck() {
 		cards = new ArrayList<Card>();
+		// every color has the same configuration
 		addCardsByColor(CardColorEnum.BLUE);
 		addCardsByColor(CardColorEnum.GREEN);
 		addCardsByColor(CardColorEnum.RED);
@@ -28,6 +29,7 @@ public class Deck {
 	}
 
 	private void addCardsByColor(CardColorEnum color) {
+		// two of every card except ZERO
 		cards.add(new Card(CardValueEnum.ZERO, color));
 		cards.add(new Card(CardValueEnum.ONE, color));
 		cards.add(new Card(CardValueEnum.TWO, color));
@@ -65,6 +67,8 @@ public class Deck {
 			setupDeck();
 		}
 
+		// for every card in the deck it switches
+		// it with a random card in the deck
 		Card temp;
 		Random rand = new Random();
 		for (int i = cards.size() - 1; i >= 1; i--) {
@@ -76,8 +80,12 @@ public class Deck {
 	}
 
 	public void shuffle(Card card) {
+		// same as parameterless method call except
+		// it doesn't reset card number and setup
 		cards.add(card);
 
+		// for every card in the deck it switches
+		// it with a random card in the deck
 		Card temp;
 		Random rand = new Random();
 		for (int i = cards.size() - 1; i >= 1; i--) {
