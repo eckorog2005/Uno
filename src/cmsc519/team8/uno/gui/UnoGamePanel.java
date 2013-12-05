@@ -163,7 +163,7 @@ public class UnoGamePanel extends JPanel {
 				checkState();
 			}
 		});
-		add(controlButton);
+		add(controlButton, 0);
 
 		preGame = true;
 		// Pre game: Determines dealer and player turn.
