@@ -155,8 +155,6 @@ public class UnoGamePanel extends JPanel {
 		controlButton.setSize(100,25);
 		controlButton.setLocation(260, 258);
 		controlButton.setVisible(true);
-		controlButton.setOpaque(true);
-//		setOpaque(true);
 		controlButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
